@@ -1,9 +1,9 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ShoppingBasket } from "lucide-react";
-import { useState } from "react";
+import { Loader2, ShoppingBasket } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { api } from "~/trpc/react";
 import { Button } from "../ui/button";
 import {
   Form,
@@ -15,21 +15,25 @@ import {
 import { Input } from "../ui/input";
 
 const formSchema = z.object({
-  grocery: z.string().min(2).max(50),
+  name: z.string().min(2).max(50),
 });
 
 export default function AddGrocery() {
-  const [groceries, setGroceries] = useState<string[]>();
-
+  const utils = api.useUtils();
+  const addGroceries = api.groceries.create.useMutation({
+    async onSuccess() {
+      await utils.groceries.invalidate();
+    },
+  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      grocery: "",
+      name: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setGroceries((prev) => prev?.concat(values.grocery));
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    await addGroceries.mutateAsync(values);
   }
 
   return (
@@ -38,7 +42,7 @@ export default function AddGrocery() {
         <div className="flex flex-row gap-2">
           <FormField
             control={form.control}
-            name="grocery"
+            name="name"
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
@@ -50,8 +54,12 @@ export default function AddGrocery() {
               </FormItem>
             )}
           />
-          <Button type="submit" size="icon">
-            <ShoppingBasket />
+          <Button type="submit" size="icon" disabled={addGroceries.isPending}>
+            {addGroceries.isPending ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <ShoppingBasket />
+            )}
           </Button>
         </div>
       </form>

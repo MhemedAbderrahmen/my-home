@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "~/components/theme-provider";
 import TopNav from "~/components/top-nav";
 import { TooltipProvider } from "~/components/ui/tooltip";
+import { TRPCReactProvider } from "~/trpc/react";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -27,8 +28,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TooltipProvider>
-            <TopNav />
-            {children}
+            <TRPCReactProvider>
+              <TopNav />
+              {children}
+            </TRPCReactProvider>
           </TooltipProvider>
         </ThemeProvider>
       </body>
