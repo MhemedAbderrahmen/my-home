@@ -19,7 +19,7 @@ const formSchema = z.object({
   name: z.string().min(2).max(50),
 });
 
-export default function AddGrocery() {
+export default function AddGrocery({ id }: { id: number }) {
   const utils = api.useUtils();
   const addGroceries = api.groceries.create.useMutation({
     async onSuccess() {
@@ -31,6 +31,7 @@ export default function AddGrocery() {
       toast.loading("Adding grocery..", { id: "add-grocery" });
     },
   });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,7 +40,7 @@ export default function AddGrocery() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await addGroceries.mutateAsync(values);
+    await addGroceries.mutateAsync({ ...values, shoppingListId: id });
   }
 
   return (

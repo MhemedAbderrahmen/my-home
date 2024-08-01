@@ -7,10 +7,12 @@ import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { ScrollArea } from "../ui/scroll-area";
 
-export default function ListGroceries() {
+export default function ListGroceries({ id }: { id: number }) {
   const utils = api.useUtils();
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
-  const { data, isPending } = api.groceries.getAll.useQuery();
+  const { data, isPending } = api.groceries.getAll.useQuery({
+    shoppingListId: id,
+  });
   const deleteGrocery = api.groceries.delete.useMutation({
     async onSuccess() {
       toast.dismiss("delete-grocery");
