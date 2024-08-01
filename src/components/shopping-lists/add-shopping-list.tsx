@@ -60,7 +60,7 @@ export default function AddShoppingList() {
       <DrawerTrigger asChild>
         <Button size={"sm"}>
           <PlusIcon className="mr-2 h-4 w-4" />
-          New Shopping List
+          New List
         </Button>
       </DrawerTrigger>
       <DrawerContent>

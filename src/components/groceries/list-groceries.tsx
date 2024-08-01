@@ -1,8 +1,9 @@
 "use client";
-import { Loader2, Trash } from "lucide-react";
+import { Loader2, ShoppingBasket, Trash } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { api } from "~/trpc/react";
+import { SkeletonLine } from "../skeleton-line";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { ScrollArea } from "../ui/scroll-area";
@@ -10,9 +11,11 @@ import { ScrollArea } from "../ui/scroll-area";
 export default function ListGroceries({ id }: { id: number }) {
   const utils = api.useUtils();
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
+
   const { data, isPending } = api.groceries.getAll.useQuery({
     shoppingListId: id,
   });
+
   const deleteGrocery = api.groceries.delete.useMutation({
     async onSuccess() {
       toast.dismiss("delete-grocery");
@@ -24,10 +27,12 @@ export default function ListGroceries({ id }: { id: number }) {
     },
   });
 
-  if (isPending) return <div>Loading..</div>;
+  if (isPending) return <SkeletonLine />;
   return (
-    <div className="flex w-full flex-col gap-4 text-center">
-      <div>List of Groceries ({data?.length})</div>
+    <div className="flex w-full flex-col gap-4">
+      <div className="flex justify-center gap-2">
+        <ShoppingBasket /> ({data?.length})
+      </div>
       <ScrollArea className="flex h-[550px] w-full flex-col gap-2 rounded-md">
         <div className="flex flex-col gap-2">
           {data?.map((grocery, index) => (

@@ -1,26 +1,31 @@
 "use client";
+import dayjs from "dayjs";
 import { ShoppingBasket } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { api } from "~/trpc/react";
+import { SkeletonLine } from "../skeleton-line";
 import { Card } from "../ui/card";
 import { ScrollArea } from "../ui/scroll-area";
 
 export default function ListShoppingLists() {
   const router = useRouter();
+  const utils = api.useUtils();
+
   const { data, isPending } = api.shoppingList.getAll.useQuery();
 
-  // const deleteGrocery = api.shoppingList.delete.useMutation({
-  //   async onSuccess() {
-  //     toast.dismiss("delete-grocery");
-  //     toast.success("Grocery deleted successfully!", { duration: 3000 });
-  //     await utils.shoppingList.getAll.invalidate();
-  //   },
-  //   onMutate() {
-  //     toast.loading("Deleting grocery..", { id: "delete-grocery" });
-  //   },
-  // });
+  const deleteShoppingList = api.shoppingList.delete.useMutation({
+    async onSuccess() {
+      toast.dismiss("delete-grocery");
+      toast.success("Grocery deleted successfully!", { duration: 3000 });
+      await utils.shoppingList.getAll.invalidate();
+    },
+    onMutate() {
+      toast.loading("Deleting grocery..", { id: "delete-grocery" });
+    },
+  });
 
-  if (isPending) return <div>Loading..</div>;
+  if (isPending) return <SkeletonLine />;
   return (
     <div className="flex w-full flex-col gap-4 text-center">
       <div className="flex justify-center gap-2">
@@ -34,16 +39,18 @@ export default function ListShoppingLists() {
                 className="flex w-full cursor-pointer flex-row items-center justify-between p-2"
                 onClick={() => router.push("/groceries/" + shoppingList.id)}
               >
-                <div className="text-start">
+                <div className="flex flex-col gap-2 text-start">
                   <div className="flex items-center gap-2">
                     {shoppingList.name}
                   </div>
+                  <small>{shoppingList.description}</small>
                   <small className="text-muted-foreground">
-                    {shoppingList.description}
+                    Created on{" "}
+                    {dayjs(shoppingList.createdAt).format("DD/MM/YYYY")}
                   </small>
                 </div>
                 <small className="text-muted-foreground">
-                  {shoppingList.createdAt.toDateString()}
+                  Items ({shoppingList.groceries.length})
                 </small>
               </Card>
             </div>

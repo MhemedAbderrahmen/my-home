@@ -19,6 +19,9 @@ export const shoppingListRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
     const groceries = await ctx.db.shoppingList.findMany({
       orderBy: { createdAt: "asc" },
+      include: {
+        groceries: true,
+      },
     });
 
     return groceries;

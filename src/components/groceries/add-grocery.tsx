@@ -6,13 +6,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { api } from "~/trpc/react";
 import { Button } from "../ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-} from "../ui/form";
+import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { Input } from "../ui/input";
 
 const formSchema = z.object({
@@ -55,9 +49,6 @@ export default function AddGrocery({ id }: { id: number }) {
                 <FormControl>
                   <Input placeholder="New grocery item" {...field} />
                 </FormControl>
-                <FormDescription>
-                  Fill this with your new grocery product
-                </FormDescription>
               </FormItem>
             )}
           />
