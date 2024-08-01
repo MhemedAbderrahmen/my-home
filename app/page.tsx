@@ -8,10 +8,8 @@ export default function Home() {
       className="flex min-h-screen flex-col items-center justify-between p-4"
       suppressHydrationWarning
     >
-      <div className="flex flex-row items-center gap-16 w-full justify-center">
-        <div>housely</div>
-        <TopNav />
-      </div>
+      <TopNav />
+
       <div className="flex flex-row gap-2 w-full">
         <Input placeholder="New grocery item" />
         <Button>Create</Button>
