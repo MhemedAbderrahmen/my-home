@@ -28,4 +28,19 @@ export const groceriesRouter = createTRPCRouter({
 
     return post ?? null;
   }),
+
+  delete: publicProcedure
+    .input(
+      z.object({
+        id: z.coerce.number(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { id } = input;
+      await ctx.db.groceries.delete({
+        where: { id },
+      });
+
+      return true;
+    }),
 });

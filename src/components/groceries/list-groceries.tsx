@@ -1,21 +1,53 @@
 "use client";
+import { Loader2, Trash } from "lucide-react";
+import { useState } from "react";
 import { api } from "~/trpc/react";
+import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { ScrollArea } from "../ui/scroll-area";
 
 export default function ListGroceries() {
+  const utils = api.useUtils();
   const { data, isPending } = api.groceries.getAll.useQuery();
+  const deleteGrocery = api.groceries.delete.useMutation({
+    async onSuccess() {
+      await utils.groceries.getAll.invalidate();
+    },
+  });
+
+  const [selectedItem, setSelectedItem] = useState<number | null>(null);
 
   if (isPending) return <div>Loading..</div>;
   return (
-    <ScrollArea className="flex h-[800px] w-full flex-col gap-2 rounded-md">
-      <div className="flex flex-col gap-2">
-        {data?.map((grocery, index) => (
-          <Card key={index} className="w-full p-2">
-            {grocery.name}
-          </Card>
-        ))}
-      </div>
-    </ScrollArea>
+    <div className="flex w-full flex-col gap-4 text-center">
+      <div>List of Groceries ({data?.length})</div>
+      <ScrollArea className="flex h-[550px] w-full flex-col gap-2 rounded-md">
+        <div className="flex flex-col gap-2">
+          {data?.map((grocery, index) => (
+            <Card key={index} className="flex w-full justify-between p-2">
+              <div>{grocery.name}</div>
+              <div>
+                <Button
+                  size="icon"
+                  className="size-6"
+                  variant={"destructive"}
+                  onClick={() => {
+                    setSelectedItem(grocery.id);
+                    deleteGrocery.mutate({ id: grocery.id });
+                  }}
+                  disabled={deleteGrocery.isPending}
+                >
+                  {deleteGrocery.isPending && selectedItem === grocery.id ? (
+                    <Loader2 className="size-4 animate-spin" />
+                  ) : (
+                    <Trash className="size-4" />
+                  )}
+                </Button>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </ScrollArea>
+    </div>
   );
 }

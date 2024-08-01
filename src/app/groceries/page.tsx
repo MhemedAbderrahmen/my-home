@@ -5,8 +5,7 @@ import { HydrateClient } from "~/trpc/server";
 export default function Groceries() {
   return (
     <HydrateClient>
-      <main className="flex min-h-screen flex-col items-center justify-between p-4">
-        <div>List of Groceries</div>
+      <main className="flex flex-col items-center justify-between gap-4 p-4">
         <ListGroceries />
         <AddGrocery />
       </main>
