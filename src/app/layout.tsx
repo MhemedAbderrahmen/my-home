@@ -1,8 +1,8 @@
-import { ThemeProvider } from "@/components/theme-provider";
-import TopNav from "@/components/top-nav";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ThemeProvider } from "~/components/theme-provider";
+import TopNav from "~/components/top-nav";
+import { TooltipProvider } from "~/components/ui/tooltip";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });

@@ -1,4 +1,4 @@
-import AddGrocery from "@/components/groceries/add-grocery";
+import AddGrocery from "~/components/groceries/add-grocery";
 
 export default function Groceries() {
   return (

@@ -1,6 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ShoppingBasket } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -18,6 +19,8 @@ const formSchema = z.object({
 });
 
 export default function AddGrocery() {
+  const [groceries, setGroceries] = useState<string[]>();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -26,13 +29,13 @@ export default function AddGrocery() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    setGroceries((prev) => prev?.concat(values.grocery));
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-        <div className="flex flex-row gap-2 ">
+        <div className="flex flex-row gap-2">
           <FormField
             control={form.control}
             name="grocery"
