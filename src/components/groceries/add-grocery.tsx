@@ -2,6 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, ShoppingBasket } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import { api } from "~/trpc/react";
 import { Button } from "../ui/button";
@@ -22,7 +23,12 @@ export default function AddGrocery() {
   const utils = api.useUtils();
   const addGroceries = api.groceries.create.useMutation({
     async onSuccess() {
+      toast.dismiss("add-grocery");
+      toast.success("Grocery added successfully!", { duration: 3000 });
       await utils.groceries.invalidate();
+    },
+    onMutate() {
+      toast.loading("Adding grocery..", { id: "add-grocery" });
     },
   });
   const form = useForm<z.infer<typeof formSchema>>({

@@ -21,11 +21,26 @@ model Post {
 }
 
 model Groceries {
-    id   Int    @id @default(autoincrement())
-    name String
+    id             Int    @id @default(autoincrement())
+    name           String
+    shoppingListId Int?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
+    ShoppingList ShoppingList? @relation(fields: [shoppingListId], references: [id])
+
     @@index([name])
+}
+
+model ShoppingList {
+    id          Int         @id @default(autoincrement())
+    name        String
+    description String
+    groceries   Groceries[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([id])
 }

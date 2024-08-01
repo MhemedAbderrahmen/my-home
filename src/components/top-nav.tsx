@@ -12,7 +12,7 @@ export default function TopNav() {
         <div className="flex w-full flex-row gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Link legacyBehavior href="/">
+              <Link href="/">
                 <Button size={"icon"} variant={"outline"} className="text-lg">
                   🏠
                 </Button>
@@ -24,7 +24,7 @@ export default function TopNav() {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Link legacyBehavior href="/groceries">
+              <Link href="/shopping-lists">
                 <Button size={"icon"} variant={"outline"} className="text-lg">
                   🛒
                 </Button>

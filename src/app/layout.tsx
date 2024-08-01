@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "~/components/theme-provider";
 import TopNav from "~/components/top-nav";
+import { Toaster } from "~/components/ui/sonner";
 import { TooltipProvider } from "~/components/ui/tooltip";
 import { TRPCReactProvider } from "~/trpc/react";
 import "./globals.css";
@@ -11,6 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Homely | APP",
   description: "Made for people to manage their homes",
+  icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
 export default function RootLayout({
@@ -31,6 +33,7 @@ export default function RootLayout({
             <TRPCReactProvider>
               <TopNav />
               {children}
+              <Toaster />
             </TRPCReactProvider>
           </TooltipProvider>
         </ThemeProvider>
