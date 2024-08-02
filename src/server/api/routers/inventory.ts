@@ -40,14 +40,33 @@ export const inventoryRouter = createTRPCRouter({
       });
     }),
 
-  getAll: publicProcedure.query(async ({ ctx }) => {
-    return await ctx.db.inventory.findFirst({
-      where: {
-        id: 0,
-      },
-      include: {
-        Groceries: true,
-      },
-    });
-  }),
+  getAll: publicProcedure
+    .input(
+      z.object({
+        itemName: z.string().optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const { itemName } = input;
+
+      const inventory = await ctx.db.inventory.findFirst({
+        where: {
+          id: 0,
+        },
+        include: {
+          Groceries: itemName
+            ? {
+                where: {
+                  itemName: {
+                    contains: itemName,
+                    mode: "insensitive", // Optional: for case-insensitive search
+                  },
+                },
+              }
+            : true,
+        },
+      });
+
+      return inventory;
+    }),
 });
