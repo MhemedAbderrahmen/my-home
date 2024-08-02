@@ -3,7 +3,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type Groceries } from "@prisma/client";
-import { MinusIcon, PlusIcon, SearchIcon } from "lucide-react";
+import { Loader2, MinusIcon, PlusIcon, SearchIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -54,7 +54,6 @@ export default function InventoryList() {
     router.replace(`${pathname}?${params.toString()}`);
   }
 
-  if (isPending) return <SkeletonLine />;
   return (
     <div className="flex flex-col gap-2">
       <Form {...form}>
@@ -72,8 +71,12 @@ export default function InventoryList() {
                 </FormItem>
               )}
             />
-            <Button type="submit">
-              <SearchIcon size={16} className="mr-2" />
+            <Button type="submit" disabled={isPending}>
+              {isPending ? (
+                <Loader2 className="mr-2 animate-spin" size={16} />
+              ) : (
+                <SearchIcon size={16} className="mr-2" />
+              )}
               Search
             </Button>
           </div>
@@ -84,23 +87,27 @@ export default function InventoryList() {
         <div>Quantity</div>
         <div>Actions</div>
       </Card>
-      {data?.Groceries.map((grocery: Groceries, index: number) => (
-        <Card
-          className={"grid grid-cols-3 items-center p-2 text-center"}
-          key={index}
-        >
-          <div>{grocery.itemName}</div>
-          <div>{grocery.threshold}</div>
-          <div className="">
-            <Button size={"icon"} variant={"ghost"}>
-              <PlusIcon size={16} />
-            </Button>
-            <Button size={"icon"} variant={"ghost"}>
-              <MinusIcon size={16} />
-            </Button>
-          </div>
-        </Card>
-      ))}
+      {isPending ? (
+        <SkeletonLine />
+      ) : (
+        data?.Groceries.map((grocery: Groceries, index: number) => (
+          <Card
+            className={"grid grid-cols-3 items-center p-2 text-center"}
+            key={index}
+          >
+            <div>{grocery.itemName}</div>
+            <div>{grocery.threshold}</div>
+            <div className="">
+              <Button size={"icon"} variant={"ghost"}>
+                <PlusIcon size={16} />
+              </Button>
+              <Button size={"icon"} variant={"ghost"}>
+                <MinusIcon size={16} />
+              </Button>
+            </div>
+          </Card>
+        ))
+      )}
     </div>
   );
 }
