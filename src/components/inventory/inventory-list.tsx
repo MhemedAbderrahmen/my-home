@@ -36,13 +36,14 @@ export default function InventoryList() {
   const decrease = api.groceries.decrease.useMutation({
     async onSuccess({ quantity }) {
       await utils.inventory.getAll.invalidate();
-      toast.success(`Decreased quantity by ${quantity}`);
+      toast.success(`Decreased quantity by ${quantity}`, { duration: 3000 });
     },
   });
+
   const increase = api.groceries.increase.useMutation({
     async onSuccess({ quantity }) {
       await utils.inventory.getAll.invalidate();
-      toast.success(`Increased quantity by ${quantity}`);
+      toast.success(`Increased quantity by ${quantity}`, { duration: 3000 });
     },
   });
 
