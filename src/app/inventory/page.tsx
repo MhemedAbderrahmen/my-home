@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import InventoryList from "~/components/inventory/inventory-list";
 import { HydrateClient } from "~/trpc/server";
 
@@ -8,7 +9,9 @@ export default function Inventory() {
         <div className="flex w-full flex-row items-center justify-between">
           📦 House Inventory
         </div>
-        <InventoryList />
+        <Suspense>
+          <InventoryList />
+        </Suspense>
       </main>
     </HydrateClient>
   );
