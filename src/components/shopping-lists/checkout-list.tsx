@@ -35,6 +35,7 @@ export default function CheckoutList({ id }: { id: number }) {
       toast.dismiss("create-shopping-list");
       toast.success("Shopping list created", { duration: 3000 });
       await utils.shoppingList.getAll.invalidate();
+      await utils.shoppingList.getPaidLists.invalidate();
     },
     onMutate() {
       toast.loading("Creating shopping list", { id: "create-shopping-list" });
