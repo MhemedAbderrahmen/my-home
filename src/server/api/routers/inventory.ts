@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
@@ -39,9 +41,12 @@ export const inventoryRouter = createTRPCRouter({
     }),
 
   getAll: publicProcedure.query(async ({ ctx }) => {
-    return await ctx.db.inventory.findMany({
+    return await ctx.db.inventory.findFirst({
       where: {
         id: 0,
+      },
+      include: {
+        Groceries: true,
       },
     });
   }),
