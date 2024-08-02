@@ -67,7 +67,10 @@ export default function ListGroceries({ id }: { id: number }) {
               className="flex w-full items-center justify-between p-2"
             >
               <small className={grocery.archived ? "line-through" : ""}>
-                {grocery.name}
+                {grocery.itemName}
+              </small>
+              <small className={grocery.archived ? "line-through" : ""}>
+                x{grocery.quantity} {grocery.unit}
               </small>
               <div className="flex flex-row gap-2">
                 {mode === "in-store" ? (
@@ -79,6 +82,7 @@ export default function ListGroceries({ id }: { id: number }) {
                       setSelectedItem(grocery.id);
                       await markPurchasedGrocery.mutateAsync({
                         id: grocery.id,
+                        archived: !grocery.archived,
                       });
                     }}
                     disabled={

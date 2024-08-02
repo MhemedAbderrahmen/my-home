@@ -56,6 +56,9 @@ export const shoppingListRouter = createTRPCRouter({
           payment,
           paid: true,
         },
+        include: {
+          groceries: true,
+        },
       });
     }),
 

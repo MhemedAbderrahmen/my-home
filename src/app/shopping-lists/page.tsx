@@ -6,7 +6,7 @@ export default function ShoppingLists() {
   return (
     <main className="flex flex-col gap-4 p-4">
       <div className="flex w-full flex-row items-center justify-between">
-        Shopping Lists
+        🛒 Shopping Lists
         <AddShoppingList />
       </div>
       <ListShoppingLists />

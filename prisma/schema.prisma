@@ -21,30 +21,42 @@ model Post {
 }
 
 model Groceries {
-    id             Int     @id @default(autoincrement())
-    name           String
+    id             Int       @id @default(autoincrement())
+    itemName       String    @map("name")
+    quantity       Int       @default(0)
+    unit           String    @default("")
+    threshold      Int       @default(0)
+    expirationDate DateTime?
+    archived       Boolean   @default(false)
     shoppingListId Int?
-    archived       Boolean @default(false)
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    inventoryId    Int?
+    createdAt      DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt
 
     ShoppingList ShoppingList? @relation(fields: [shoppingListId], references: [id])
+    Inventory    Inventory?    @relation(fields: [inventoryId], references: [id])
 
-    @@index([name])
+    @@index([itemName])
 }
 
 model ShoppingList {
     id          Int         @id @default(autoincrement())
     name        String
     description String
+    paid        Boolean     @default(false)
+    payment     Int         @default(0)
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
     groceries   Groceries[]
 
-    paid    Boolean @default(false)
-    payment Int     @default(0)
+    @@index([id])
+}
 
+model Inventory {
+    id        Int      @id @default(autoincrement())
+    userId    String   @unique
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    @@index([id])
+    Groceries Groceries[]
 }

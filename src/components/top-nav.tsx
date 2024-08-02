@@ -36,15 +36,27 @@ export default function TopNav() {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
+              <Link href="/inventory">
+                <Button size={"icon"} variant={"outline"} className="text-lg">
+                  📦
+                </Button>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Inventory</p>
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
               <Button size={"icon"} variant={"outline"} className="text-lg">
                 🔧
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Maintenance</p>
+              <p>Maintenanc</p>
             </TooltipContent>
           </Tooltip>
-          <Button size={"icon"} variant={"outline"} className="text-lg">
+          {/* <Button size={"icon"} variant={"outline"} className="text-lg">
             👪
           </Button>
           <Button size={"icon"} variant={"outline"} className="text-lg">
@@ -52,7 +64,7 @@ export default function TopNav() {
           </Button>
           <Button size={"icon"} variant={"outline"} className="text-lg">
             👌
-          </Button>
+          </Button> */}
           <ThemeToggle />
         </div>
       </div>

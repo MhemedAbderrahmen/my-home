@@ -5,12 +5,21 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 export const groceriesRouter = createTRPCRouter({
   create: publicProcedure
     .input(
-      z.object({ shoppingListId: z.coerce.number(), name: z.string().min(1) }),
+      z.object({
+        shoppingListId: z.coerce.number(),
+        itemName: z.string().min(2).max(50),
+        quantity: z.coerce.number().positive(),
+        threshhold: z.coerce.number().positive(),
+        unit: z.string().min(2).max(50),
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       return ctx.db.groceries.create({
         data: {
-          name: input.name,
+          itemName: input.itemName,
+          unit: input.unit,
+          quantity: input.quantity,
+          threshold: input.threshhold,
           shoppingListId: input.shoppingListId,
         },
       });
@@ -39,13 +48,14 @@ export const groceriesRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.coerce.number(),
+        archived: z.boolean(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       const { id } = input;
       await ctx.db.groceries.update({
         where: { id },
-        data: { archived: true },
+        data: { archived: input.archived },
       });
 
       return true;
