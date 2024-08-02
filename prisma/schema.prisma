@@ -21,9 +21,10 @@ model Post {
 }
 
 model Groceries {
-    id             Int    @id @default(autoincrement())
+    id             Int     @id @default(autoincrement())
     name           String
     shoppingListId Int?
+    archived       Boolean @default(false)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

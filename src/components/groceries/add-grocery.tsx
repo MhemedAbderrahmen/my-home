@@ -15,21 +15,23 @@ const formSchema = z.object({
 
 export default function AddGrocery({ id }: { id: number }) {
   const utils = api.useUtils();
-  const addGroceries = api.groceries.create.useMutation({
-    async onSuccess() {
-      toast.dismiss("add-grocery");
-      toast.success("Grocery added successfully!", { duration: 3000 });
-      await utils.groceries.invalidate();
-    },
-    onMutate() {
-      toast.loading("Adding grocery..", { id: "add-grocery" });
-    },
-  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+    },
+  });
+
+  const addGroceries = api.groceries.create.useMutation({
+    async onSuccess() {
+      toast.dismiss("add-grocery");
+      toast.success("Grocery added successfully!", { duration: 3000 });
+      form.reset();
+      await utils.groceries.invalidate();
+    },
+    onMutate() {
+      toast.loading("Adding grocery..", { id: "add-grocery" });
     },
   });
 

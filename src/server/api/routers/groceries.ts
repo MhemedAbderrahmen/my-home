@@ -35,13 +35,21 @@ export const groceriesRouter = createTRPCRouter({
       return groceries;
     }),
 
-  getLatest: publicProcedure.query(async ({ ctx }) => {
-    const post = await ctx.db.groceries.findFirst({
-      orderBy: { createdAt: "desc" },
-    });
+  archive: publicProcedure
+    .input(
+      z.object({
+        id: z.coerce.number(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { id } = input;
+      await ctx.db.groceries.update({
+        where: { id },
+        data: { archived: true },
+      });
 
-    return post ?? null;
-  }),
+      return true;
+    }),
 
   delete: publicProcedure
     .input(
