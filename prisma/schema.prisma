@@ -40,6 +40,9 @@ model ShoppingList {
     description String
     groceries   Groceries[]
 
+    paid    Boolean @default(false)
+    payment Int     @default(0)
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 

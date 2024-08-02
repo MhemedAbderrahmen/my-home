@@ -18,14 +18,46 @@ export const shoppingListRouter = createTRPCRouter({
 
   getAll: publicProcedure.query(async ({ ctx }) => {
     const groceries = await ctx.db.shoppingList.findMany({
+      where: { paid: false },
       orderBy: { createdAt: "asc" },
       include: {
         groceries: true,
       },
     });
-
     return groceries;
   }),
+
+  getPaidLists: publicProcedure.query(async ({ ctx }) => {
+    const groceries = await ctx.db.shoppingList.findMany({
+      where: { paid: true },
+      orderBy: { createdAt: "asc" },
+      include: {
+        groceries: true,
+      },
+    });
+    return groceries;
+  }),
+
+  checkout: publicProcedure
+    .input(z.object({ id: z.coerce.number(), payment: z.coerce.number() }))
+    .mutation(async ({ ctx, input }) => {
+      const { id, payment } = input;
+      const shoppingList = await ctx.db.shoppingList.findUnique({
+        where: { id },
+      });
+
+      if (!shoppingList) {
+        throw new Error("Shopping list not found");
+      }
+
+      return ctx.db.shoppingList.update({
+        where: { id },
+        data: {
+          payment,
+          paid: true,
+        },
+      });
+    }),
 
   delete: publicProcedure
     .input(

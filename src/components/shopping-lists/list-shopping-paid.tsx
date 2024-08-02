@@ -5,19 +5,19 @@ import { api } from "~/trpc/react";
 import { SkeletonLine } from "../skeleton-line";
 import { Card } from "../ui/card";
 import { ScrollArea } from "../ui/scroll-area";
-import CheckoutList from "./checkout-list";
 
-export default function ListShoppingLists() {
+export default function ListShoppingPaid() {
   const router = useRouter();
-  const { data, isPending } = api.shoppingList.getAll.useQuery();
+
+  const { data, isPending } = api.shoppingList.getPaidLists.useQuery();
 
   if (isPending) return <SkeletonLine />;
   return (
     <div className="flex w-full flex-col gap-4 text-center">
       <div className="flex justify-center gap-2">
-        New Lists ({data?.length})
+        Paid Lists ({data?.length})
       </div>
-      <ScrollArea className="flex w-full flex-col gap-2 rounded-md">
+      <ScrollArea className="flex h-[550px] w-full flex-col gap-2 rounded-md">
         <div className="flex flex-col gap-2">
           {data?.map((shoppingList, index) => (
             <div className="flex w-full gap-2" key={index}>
@@ -39,7 +39,9 @@ export default function ListShoppingLists() {
                     {dayjs(shoppingList.createdAt).format("DD/MM/YYYY")}
                   </small>
                 </div>
-                <CheckoutList id={shoppingList.id} />
+                <div>
+                  {shoppingList.payment} <small>DT</small>
+                </div>
               </Card>
             </div>
           ))}
