@@ -75,4 +75,32 @@ export const groceriesRouter = createTRPCRouter({
 
       return true;
     }),
+
+  increase: publicProcedure
+    .input(
+      z.object({
+        id: z.coerce.number(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { id } = input;
+      return await ctx.db.groceries.update({
+        where: { id },
+        data: { quantity: { increment: 1 } },
+      });
+    }),
+
+  decrease: publicProcedure
+    .input(
+      z.object({
+        id: z.coerce.number(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { id } = input;
+      return await ctx.db.groceries.update({
+        where: { id },
+        data: { quantity: { decrement: 1 } },
+      });
+    }),
 });

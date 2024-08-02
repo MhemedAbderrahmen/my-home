@@ -50,6 +50,9 @@ export const inventoryRouter = createTRPCRouter({
       const { itemName } = input;
 
       const inventory = await ctx.db.inventory.findFirst({
+        orderBy: {
+          createdAt: "desc",
+        },
         where: {
           id: 0,
         },

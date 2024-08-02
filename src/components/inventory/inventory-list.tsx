@@ -5,7 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { type Groceries } from "@prisma/client";
 import { Loader2, MinusIcon, PlusIcon, SearchIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import { api } from "~/trpc/react";
 import { SkeletonLine } from "../skeleton-line";
@@ -28,6 +30,21 @@ export default function InventoryList() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const utils = api.useUtils();
+  const [selectedGrocery, setSelectedGrocery] = useState<number | null>(null);
+
+  const decrease = api.groceries.decrease.useMutation({
+    async onSuccess({ quantity }) {
+      await utils.inventory.getAll.invalidate();
+      toast.success(`Decreased quantity by ${quantity}`);
+    },
+  });
+  const increase = api.groceries.increase.useMutation({
+    async onSuccess({ quantity }) {
+      await utils.inventory.getAll.invalidate();
+      toast.success(`Increased quantity by ${quantity}`);
+    },
+  });
 
   const { data, isPending } = api.inventory.getAll.useQuery({
     itemName: searchParams.get("itemName") ?? undefined,
@@ -96,13 +113,41 @@ export default function InventoryList() {
             key={index}
           >
             <div>{grocery.itemName}</div>
-            <div>{grocery.threshold}</div>
+            <div>{grocery.quantity}</div>
             <div className="">
-              <Button size={"icon"} variant={"ghost"}>
-                <PlusIcon size={16} />
+              <Button
+                size={"icon"}
+                variant={"ghost"}
+                onClick={() => {
+                  increase.mutate({
+                    id: grocery.id,
+                  });
+                  setSelectedGrocery(grocery.id);
+                }}
+                disabled={increase.isPending && selectedGrocery === grocery.id}
+              >
+                {selectedGrocery === grocery.id && increase.isPending ? (
+                  <Loader2 className="animate-spin" size={16} />
+                ) : (
+                  <PlusIcon size={16} />
+                )}
               </Button>
-              <Button size={"icon"} variant={"ghost"}>
-                <MinusIcon size={16} />
+              <Button
+                size={"icon"}
+                variant={"ghost"}
+                onClick={() => {
+                  setSelectedGrocery(grocery.id);
+                  decrease.mutate({
+                    id: grocery.id,
+                  });
+                }}
+                disabled={decrease.isPending && selectedGrocery === grocery.id}
+              >
+                {selectedGrocery === grocery.id && decrease.isPending ? (
+                  <Loader2 className="animate-spin" size={16} />
+                ) : (
+                  <MinusIcon size={16} />
+                )}
               </Button>
             </div>
           </Card>
