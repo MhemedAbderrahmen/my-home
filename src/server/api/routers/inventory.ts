@@ -11,7 +11,7 @@ export const inventoryRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const groceries = await ctx.db.inventory.findFirst({
+      const oldGroceries = await ctx.db.inventory.findFirst({
         where: {
           id: input.id,
         },
@@ -20,13 +20,19 @@ export const inventoryRouter = createTRPCRouter({
         },
       });
 
+      const oldGroceriesIds = input.groceries.filter(
+        (id) => !oldGroceries?.Groceries.some((grocery) => grocery.id === id),
+      );
+
+      const allGroceriesIds = [...oldGroceriesIds, ...input.groceries];
+
       return ctx.db.inventory.update({
         where: {
           id: input.id,
         },
         data: {
           Groceries: {
-            connect: input.groceries.map((id) => ({ id })),
+            connect: allGroceriesIds.map((id) => ({ id })),
           },
         },
       });
