@@ -21,7 +21,30 @@ export default function Home() {
           </CardHeader>
         </Card>
         <br />
-        Overview
+        <div className="flex flex-col gap-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Overview</CardTitle>
+              <CardDescription>
+                This is the overview of your home.
+              </CardDescription>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Tasks</CardTitle>
+              <CardDescription>Here you can manage your tasks.</CardDescription>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Expenses</CardTitle>
+              <CardDescription>
+                This is your monthly expesnse overview
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        </div>
       </section>
     </main>
   );

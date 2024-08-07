@@ -1,5 +1,6 @@
 "use client";
 
+import { SignedOut, SignInButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
 import { Button } from "./ui/button";
@@ -68,6 +69,9 @@ export default function TopNav() {
           <ThemeToggle />
         </div>
       </div>
+      <SignedOut>
+        <SignInButton />
+      </SignedOut>
     </div>
   );
 }

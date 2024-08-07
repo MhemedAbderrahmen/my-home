@@ -10,8 +10,10 @@ export default function ShoppingLists() {
           🛒 Shopping Lists
           <AddShoppingList />
         </div>
-        <ListShoppingLists />
-        <ListShoppingPaid />
+        <div className="flex flex-col gap-4">
+          <ListShoppingLists />
+          <ListShoppingPaid />
+        </div>
       </section>
     </main>
   );
