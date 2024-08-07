@@ -6,11 +6,13 @@ export default function Groceries({ params }: { params: { id: number } }) {
   return (
     <HydrateClient>
       <main className="flex flex-col items-center justify-between gap-4 p-4">
-        <div className="flex w-full flex-row items-center justify-between">
-          🛒 Groceries Lists
-          <AddGrocery id={params.id} />
-        </div>
-        <ListGroceries id={params.id} />
+        <section className="w-full md:max-w-screen-sm">
+          <div className="flex w-full flex-row items-center justify-between">
+            🛒 Groceries Lists
+            <AddGrocery id={params.id} />
+          </div>
+          <ListGroceries id={params.id} />
+        </section>
       </main>
     </HydrateClient>
   );

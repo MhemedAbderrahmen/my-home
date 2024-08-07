@@ -53,7 +53,7 @@ export default function TopNav() {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Maintenanc</p>
+              <p>Maintenance</p>
             </TooltipContent>
           </Tooltip>
           {/* <Button size={"icon"} variant={"outline"} className="text-lg">
