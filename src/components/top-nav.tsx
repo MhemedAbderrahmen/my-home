@@ -68,28 +68,14 @@ export default function TopNav() {
           </Button> */}
           <ThemeToggle />
           <SignedOut>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <SignInButton>
-                  <Button size={"icon"} variant={"outline"} className="text-lg">
-                    🗝️
-                  </Button>
-                </SignInButton>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Sign In</p>
-              </TooltipContent>
-            </Tooltip>
+            <SignInButton>
+              <Button size={"icon"} variant={"outline"} className="text-lg">
+                🗝️
+              </Button>
+            </SignInButton>
           </SignedOut>
           <SignedIn>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <UserButton />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Profile</p>
-              </TooltipContent>
-            </Tooltip>
+            <UserButton />
           </SignedIn>
         </div>
       </div>
