@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs/server";
 import {
   Card,
   CardDescription,
@@ -6,6 +7,7 @@ import {
 } from "~/components/ui/card";
 
 export default function Home() {
+  const { sessionClaims } = auth();
   return (
     <main
       className="flex flex-col items-center justify-between p-4"
@@ -14,7 +16,9 @@ export default function Home() {
       <section className="w-full md:max-w-screen-sm">
         <Card>
           <CardHeader>
-            <CardTitle>Welcome! 👋</CardTitle>
+            <CardTitle>
+              Welcome, {sessionClaims?.username as string}! 👋
+            </CardTitle>
             <CardDescription>
               Welcome to homely, an app to help you manage your home.
             </CardDescription>

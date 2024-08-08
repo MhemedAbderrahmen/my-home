@@ -9,7 +9,7 @@ const isPublicRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware((auth, req) => {
-  const { userId, sessionClaims, redirectToSignIn } = auth();
+  const { userId, sessionClaims } = auth();
 
   // Apply middleware only for page requests, not API routes
   if (
