@@ -1,32 +1,52 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-import { type NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-const isOnboardingRoute = createRouteMatcher(["/onboarding"]);
 const isPublicRoute = createRouteMatcher([
   "/",
-  "/api/uploadthing",
+  "/onboarding",
   "/sign-in",
   "/sign-up",
 ]);
 
-export default clerkMiddleware((auth, req: NextRequest) => {
+export default clerkMiddleware((auth, req) => {
   const { userId, sessionClaims, redirectToSignIn } = auth();
 
-  if (userId && isOnboardingRoute(req)) {
+  // Apply middleware only for page requests, not API routes
+  if (
+    req.nextUrl.pathname.startsWith("/api") ||
+    req.nextUrl.pathname.startsWith("/trpc")
+  ) {
     return NextResponse.next();
   }
 
-  if (!userId && !isPublicRoute(req))
-    return redirectToSignIn({ returnBackUrl: req.url });
+  // If the user isn't signed in and the route is private, redirect to sign-in
+  if (!userId && !isPublicRoute(req)) {
+    const signinUrl = new URL("/sign-in", req.url);
+    return NextResponse.redirect(signinUrl);
+  }
 
-  if (userId && !sessionClaims?.metadata?.onboardingComplete) {
+  // Catch users who do not have `onboardingComplete: true` in their publicMetadata
+  // Redirect them to the /onboading route to complete onboarding
+  if (
+    userId &&
+    !sessionClaims?.metadata?.onboardingComplete &&
+    req.nextUrl.pathname !== "/onboarding"
+  ) {
     const onboardingUrl = new URL("/onboarding", req.url);
     return NextResponse.redirect(onboardingUrl);
   }
 
-  if (userId && !isPublicRoute(req)) return NextResponse.next();
+  // If the user is logged in and the route is protected, let them view.
+  if (userId && !isPublicRoute(req)) {
+    return NextResponse.next();
+  }
 });
 
 export const config = {
-  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: [
+    // Skip Next.js internals and all static files, unless found in search params
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    // Always run for API routes
+    "/(api|trpc)(.*)",
+  ],
 };

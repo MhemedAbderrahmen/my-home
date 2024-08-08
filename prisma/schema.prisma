@@ -62,9 +62,9 @@ model Inventory {
 }
 
 model User {
-    id      Int    @id @default(autoincrement())
-    email   String @unique
-    clerkId String @unique
+    id      Int     @id @default(autoincrement())
+    clerkId String  @unique
+    partner String? @unique
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
