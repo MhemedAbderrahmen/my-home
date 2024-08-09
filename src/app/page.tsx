@@ -1,3 +1,4 @@
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import {
   Card,
@@ -25,7 +26,10 @@ export default function Home() {
           </CardHeader>
         </Card>
         <br />
-        <div className="flex flex-col gap-4"></div>
+        <div className="flex flex-col gap-4">
+          <SignedIn>Welcome to your home dashboard! 🏠</SignedIn>
+          <SignedOut>Sign In to manage your home</SignedOut>
+        </div>
       </section>
     </main>
   );
