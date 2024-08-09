@@ -7,10 +7,9 @@
 
 # In Progress:
 
-- [] Display Most recent shopping list (if not done aka paid)
-
 # Done:
 
+- [x] Display Most recent shopping list (if not done aka paid)
 - [x] Fix pending state for "create shopping list" button
 - [x] Hide drawers after success requests
 - [x] Fix Onboarding (remove user linking from onboarding)
