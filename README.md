@@ -2,10 +2,11 @@
 
 # To do:
 
-- [] Display Monthly Expenses
-- [] Partner Up System ( linking users ) / maybe with qrcode ?
+- [ ] Display Monthly Expenses
 
 # In Progress:
+
+- [ ] Partner Up System ( linking users ) / maybe with qrcode ?
 
 # Done:
 
