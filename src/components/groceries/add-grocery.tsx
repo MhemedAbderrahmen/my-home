@@ -1,6 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, PlusIcon, ShoppingBasket } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -34,11 +35,14 @@ const formSchema = z.object({
 
 export default function AddGrocery({ id }: { id: number }) {
   const utils = api.useUtils();
+  const [isOpen, setIsOpen] = useState(false);
+
   const addGrocery = api.groceries.create.useMutation({
     async onSuccess() {
       toast.dismiss("create-shopping-list");
       toast.success("Shopping list created", { duration: 3000 });
       await utils.groceries.getAll.invalidate();
+      setIsOpen(false);
     },
     onMutate() {
       toast.loading("Creating shopping list", { id: "create-shopping-list" });
@@ -63,9 +67,9 @@ export default function AddGrocery({ id }: { id: number }) {
   }
 
   return (
-    <Drawer>
+    <Drawer open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
       <DrawerTrigger asChild>
-        <Button size={"sm"}>
+        <Button size={"sm"} onClick={() => setIsOpen(true)}>
           <PlusIcon className="mr-2 h-4 w-4" />
           Grocery
         </Button>

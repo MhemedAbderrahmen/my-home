@@ -11,6 +11,8 @@
 
 # Done:
 
+- [x] Fix pending state for "create shopping list" button
+- [x] Hide drawers after success requests
 - [x] Fix Onboarding (remove user linking from onboarding)
 - [x] Fix Favicon not loading
 - [x] Add onboarding page when creating a user

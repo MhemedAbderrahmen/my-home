@@ -21,6 +21,16 @@ export const shoppingListRouter = createTRPCRouter({
       });
     }),
 
+  getLatest: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.db.shoppingList.findFirst({
+      where: { paid: false, userId: ctx.user.userId },
+      orderBy: { createdAt: "desc" },
+      include: {
+        groceries: true,
+      },
+    });
+  }),
+
   getAll: protectedProcedure.query(async ({ ctx }) => {
     const groceries = await ctx.db.shoppingList.findMany({
       where: { paid: false, userId: ctx.user.userId },

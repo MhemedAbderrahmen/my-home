@@ -1,5 +1,6 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
+import RecentList from "~/components/shopping-lists/recent-list";
 import {
   Card,
   CardDescription,
@@ -28,14 +29,7 @@ export default function Home() {
         <br />
         <div className="flex flex-col gap-4">
           <SignedIn>
-            <Card>
-              <CardHeader>
-                <CardTitle>Shopping Lists</CardTitle>
-                <CardDescription>
-                  Most Recent Shopping List: Groceries
-                </CardDescription>
-              </CardHeader>
-            </Card>
+            <RecentList />
             <Card>
               <CardHeader>
                 <CardTitle>Expenses</CardTitle>

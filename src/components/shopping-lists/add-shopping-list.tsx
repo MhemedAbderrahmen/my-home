@@ -1,6 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PlusIcon, ShoppingBasket } from "lucide-react";
+import { Loader2, PlusIcon, ShoppingBasket } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -32,11 +33,15 @@ const formSchema = z.object({
 
 export default function AddShoppingList() {
   const utils = api.useUtils();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const createShoppingList = api.shoppingList.create.useMutation({
     async onSuccess() {
       toast.dismiss("create-shopping-list");
       toast.success("Shopping list created", { duration: 3000 });
       await utils.shoppingList.getAll.invalidate();
+
+      setIsOpen(false);
     },
     onMutate() {
       toast.loading("Creating shopping list", { id: "create-shopping-list" });
@@ -56,9 +61,9 @@ export default function AddShoppingList() {
   }
 
   return (
-    <Drawer>
+    <Drawer open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
       <DrawerTrigger asChild>
-        <Button size={"sm"}>
+        <Button size={"sm"} onClick={() => setIsOpen(true)}>
           <PlusIcon className="mr-2 h-4 w-4" />
           New List
         </Button>
@@ -108,8 +113,17 @@ export default function AddShoppingList() {
                 </FormItem>
               )}
             />
-            <Button type="submit" size="sm">
-              <ShoppingBasket className="mr-2" /> Create Shopping List
+            <Button
+              type="submit"
+              size="sm"
+              disabled={createShoppingList.isPending}
+            >
+              {createShoppingList.isPending ? (
+                <Loader2 className="mr-2 animate-spin" />
+              ) : (
+                <ShoppingBasket className="mr-2" />
+              )}
+              Create Shopping List
             </Button>
           </form>
         </Form>
