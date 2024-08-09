@@ -1,5 +1,4 @@
 import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
 
 export default function RootLayout({
   children,
@@ -8,6 +7,6 @@ export default function RootLayout({
 }>) {
   const user = auth();
 
-  if (user.sessionClaims?.metadata.onboardingComplete) return redirect("/");
+  // if (user.sessionClaims?.metadata.onboardingComplete) return redirect("/");
   return children;
 }

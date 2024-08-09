@@ -27,7 +27,24 @@ export default function Home() {
         </Card>
         <br />
         <div className="flex flex-col gap-4">
-          <SignedIn>Welcome to your home dashboard! 🏠</SignedIn>
+          <SignedIn>
+            <Card>
+              <CardHeader>
+                <CardTitle>Shopping Lists</CardTitle>
+                <CardDescription>
+                  Most Recent Shopping List: Groceries
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Expenses</CardTitle>
+                <CardDescription>
+                  Your monthly shopping list expenses
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </SignedIn>
           <SignedOut>Sign In to manage your home</SignedOut>
         </div>
       </section>

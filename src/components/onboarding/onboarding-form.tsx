@@ -1,33 +1,58 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { toast } from "sonner";
-import { z } from "zod";
 import { api } from "~/trpc/react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
 import { completeOnboarding } from "./_actions";
-const formSchema = z.object({
-  partner: z.string().optional(),
-});
+
+const First = () => {
+  return (
+    <CardContent>
+      <p>
+        Welcome to MyHome! Manage your groceries, shopping lists, and home
+        inventory with ease.
+      </p>
+    </CardContent>
+  );
+};
+const Second = () => {
+  return (
+    <CardContent>
+      <p>Easily create shopping lists and add groceries to stay organized.</p>
+    </CardContent>
+  );
+};
+const Third = () => {
+  return (
+    <CardContent>
+      <p>
+        Keep track of your home inventory, add or remove items, and never run
+        out of essentials.
+      </p>
+    </CardContent>
+  );
+};
+
+const Fourth = () => {
+  return (
+    <CardContent>
+      <p>
+        Automatically transfer items from your shopping list to your inventory
+        once you check out.
+      </p>
+    </CardContent>
+  );
+};
 
 export default function OnboardingForm() {
   const { user } = useUser();
   const router = useRouter();
+  const [step, setStep] = useState<number>(1);
 
   const initiHousehold = api.household.create.useMutation({
     onMutate() {
@@ -49,15 +74,8 @@ export default function OnboardingForm() {
     },
   });
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      partner: "",
-    },
-  });
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    await createUser.mutateAsync(values);
+  async function onSubmit() {
+    await createUser.mutateAsync();
     await initiHousehold.mutateAsync();
 
     await completeOnboarding();
@@ -67,44 +85,38 @@ export default function OnboardingForm() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <Card>
-          <CardHeader>
-            <h2 className="text-xl font-semibold">Welcome to Homely</h2>
-          </CardHeader>
-          <CardContent>
-            <p>If you dont have a partner you can skip this step</p>
-            <FormField
-              control={form.control}
-              name="partner"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Partner username</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Wifey" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This is optional, but if for a better experience, you can
-                    link your partner to your account.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
-          <CardFooter className="flex w-full justify-end gap-2">
-            <CardFooter>
-              <Button type="submit" disabled={createUser.isPending}>
-                {createUser.isPending && (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                Submit
-              </Button>
-            </CardFooter>
-          </CardFooter>
-        </Card>
-      </form>
-    </Form>
+    <Card>
+      <CardHeader>
+        <h2 className="text-xl font-semibold">Welcome to Homely</h2>
+      </CardHeader>
+      {step === 1 && <First />}
+      {step === 2 && <Second />}
+      {step === 3 && <Third />}
+      {step === 4 && <Fourth />}
+      <CardFooter className="flex w-full justify-end gap-2">
+        {step > 1 && (
+          <Button
+            variant={"outline"}
+            onClick={() => setStep((prev) => prev - 1)}
+          >
+            Back
+          </Button>
+        )}
+        {step < 4 ? (
+          <Button onClick={() => setStep((prev) => prev + 1)}>Next</Button>
+        ) : (
+          <Button
+            type="submit"
+            disabled={createUser.isPending}
+            onClick={() => onSubmit()}
+          >
+            {createUser.isPending && (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            Get Started
+          </Button>
+        )}
+      </CardFooter>
+    </Card>
   );
 }
