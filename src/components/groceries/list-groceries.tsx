@@ -52,13 +52,11 @@ export default function ListGroceries({ id }: { id: number }) {
           }
         />
       </div>
-      <div>
-        <small>
-          {mode === "in-store"
-            ? "With this mode you can mark groceries as purchased"
-            : "With this mode you can delete groceries"}
-        </small>
-      </div>
+      <small>
+        {mode === "in-store"
+          ? "With this mode you can mark groceries as purchased"
+          : "With this mode you can delete groceries"}
+      </small>
       <ScrollArea className="flex h-[550px] w-full flex-col gap-2 rounded-md">
         <div className="flex flex-col gap-2">
           {data?.map((grocery, index) => (

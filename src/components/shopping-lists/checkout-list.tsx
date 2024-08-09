@@ -32,18 +32,17 @@ export default function CheckoutList({ id }: { id: number }) {
   const utils = api.useUtils();
   const updateInventory = api.inventory.add.useMutation();
   const checkout = api.shoppingList.checkout.useMutation({
+    onMutate() {
+      toast.loading("Creating shopping list", { id: "create-shopping-list" });
+    },
     async onSuccess({ groceries }) {
       await updateInventory.mutateAsync({
-        id: 0,
         groceries: groceries.map((grocery) => grocery.id),
       });
       await utils.shoppingList.getAll.invalidate();
       await utils.shoppingList.getPaidLists.invalidate();
       toast.dismiss("create-shopping-list");
       toast.success("Shopping list created", { duration: 3000 });
-    },
-    onMutate() {
-      toast.loading("Creating shopping list", { id: "create-shopping-list" });
     },
   });
 

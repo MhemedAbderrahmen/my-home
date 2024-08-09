@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const groceriesRouter = createTRPCRouter({
-  create: publicProcedure
+  create: protectedProcedure
     .input(
       z.object({
         shoppingListId: z.coerce.number(),
@@ -25,7 +25,7 @@ export const groceriesRouter = createTRPCRouter({
       });
     }),
 
-  getAll: publicProcedure
+  getAll: protectedProcedure
     .input(
       z.object({
         shoppingListId: z.coerce.number(),
@@ -44,7 +44,7 @@ export const groceriesRouter = createTRPCRouter({
       return groceries;
     }),
 
-  archive: publicProcedure
+  archive: protectedProcedure
     .input(
       z.object({
         id: z.coerce.number(),
@@ -61,7 +61,7 @@ export const groceriesRouter = createTRPCRouter({
       return true;
     }),
 
-  delete: publicProcedure
+  delete: protectedProcedure
     .input(
       z.object({
         id: z.coerce.number(),
@@ -76,7 +76,7 @@ export const groceriesRouter = createTRPCRouter({
       return true;
     }),
 
-  increase: publicProcedure
+  increase: protectedProcedure
     .input(
       z.object({
         id: z.coerce.number(),
@@ -90,7 +90,7 @@ export const groceriesRouter = createTRPCRouter({
       });
     }),
 
-  decrease: publicProcedure
+  decrease: protectedProcedure
     .input(
       z.object({
         id: z.coerce.number(),

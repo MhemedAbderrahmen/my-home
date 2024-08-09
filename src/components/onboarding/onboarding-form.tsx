@@ -29,6 +29,16 @@ export default function OnboardingForm() {
   const { user } = useUser();
   const router = useRouter();
 
+  const initiHousehold = api.household.create.useMutation({
+    onMutate() {
+      toast.loading("Creating household...", { id: "create-household" });
+    },
+    onSuccess() {
+      toast.dismiss("create-household");
+      toast.success("Household created successfully");
+    },
+  });
+
   const createUser = api.user.create.useMutation({
     onMutate() {
       toast.loading("Creating user...", { id: "create-user" });
@@ -48,8 +58,11 @@ export default function OnboardingForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await createUser.mutateAsync(values);
+    await initiHousehold.mutateAsync();
+
     await completeOnboarding();
     await user?.reload();
+
     router.push("/");
   }
 

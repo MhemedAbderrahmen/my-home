@@ -2,20 +2,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const inventoryRouter = createTRPCRouter({
-  add: publicProcedure
+  add: protectedProcedure
     .input(
       z.object({
-        id: z.coerce.number(),
         groceries: z.array(z.coerce.number()),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       const oldGroceries = await ctx.db.inventory.findFirst({
         where: {
-          id: input.id,
+          userId: ctx.user.userId,
         },
         select: {
           Groceries: true,
@@ -30,7 +29,7 @@ export const inventoryRouter = createTRPCRouter({
 
       return ctx.db.inventory.update({
         where: {
-          id: input.id,
+          userId: ctx.user.userId,
         },
         data: {
           Groceries: {
@@ -40,7 +39,7 @@ export const inventoryRouter = createTRPCRouter({
       });
     }),
 
-  getAll: publicProcedure
+  getAll: protectedProcedure
     .input(
       z.object({
         itemName: z.string().optional(),
@@ -54,7 +53,7 @@ export const inventoryRouter = createTRPCRouter({
           createdAt: "desc",
         },
         where: {
-          id: 0,
+          userId: ctx.user.userId,
         },
         include: {
           Groceries: itemName

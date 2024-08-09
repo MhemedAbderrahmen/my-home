@@ -1,15 +1,20 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
 export const shoppingListRouter = createTRPCRouter({
-  create: publicProcedure
+  create: protectedProcedure
     .input(
       z.object({ name: z.string().min(1), description: z.string().min(1) }),
     )
     .mutation(async ({ ctx, input }) => {
       return ctx.db.shoppingList.create({
         data: {
+          userId: ctx.user.userId,
           name: input.name,
           description: input.description,
         },

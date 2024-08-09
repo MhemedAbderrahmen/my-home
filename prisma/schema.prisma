@@ -41,6 +41,7 @@ model Groceries {
 
 model ShoppingList {
     id          Int         @id @default(autoincrement())
+    userId      String      @unique
     name        String
     description String
     paid        Boolean     @default(false)
@@ -59,6 +60,7 @@ model Inventory {
     updatedAt DateTime @updatedAt
 
     Groceries Groceries[]
+    household household?
 }
 
 model User {
@@ -66,6 +68,17 @@ model User {
     clerkId String  @unique
     partner String? @unique
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime    @default(now())
+    updatedAt DateTime    @updatedAt
+    household household[]
+}
+
+model household {
+    id          Int       @id @default(autoincrement())
+    inventoryId Int       @unique
+    userId      String
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+    Inventory   Inventory @relation(fields: [inventoryId], references: [id])
+    User        User      @relation(fields: [userId], references: [clerkId])
 }
