@@ -20,44 +20,40 @@ export default function RecentList() {
 
   if (isPending) return <SkeletonLine />;
   return (
-    <div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Shopping Lists</CardTitle>
-          <CardDescription>
-            Most Recent Shopping List: Groceries
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {data ? (
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <div>
-                  {data.name} ({data.groceries.length} Groceries)
-                </div>
-                <small>{data.description}</small>
-                <small className="text-muted-foreground">
-                  {dayjs(data.createdAt).format(DEFAULT_DATE_FORMAT)}
-                </small>
+    <Card className="col-span-1">
+      <CardHeader>
+        <CardTitle>Shopping Lists</CardTitle>
+        <CardDescription>Most Recent Shopping List: Groceries</CardDescription>
+      </CardHeader>
+      <CardContent>
+        {data ? (
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <div>
+                {data.name} ({data.groceries.length} Groceries)
               </div>
-              <Button
-                size={"sm"}
-                variant={"outline"}
-                onClick={() => router.push(`/groceries/${data.id}`)}
-              >
-                <EyeIcon className="mr-2 size-4" /> View List
-              </Button>
+              <small>{data.description}</small>
+              <small className="text-muted-foreground">
+                {dayjs(data.createdAt).format(DEFAULT_DATE_FORMAT)}
+              </small>
             </div>
-          ) : (
-            <div className="flex flex-row items-center justify-between">
-              <div>No recent shopping lists found</div>
-              <Button onClick={() => router.push("/shopping-lists")}>
-                New List
-              </Button>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+            <Button
+              size={"sm"}
+              variant={"outline"}
+              onClick={() => router.push(`/groceries/${data.id}`)}
+            >
+              <EyeIcon className="mr-2 size-4" /> View List
+            </Button>
+          </div>
+        ) : (
+          <div className="flex flex-row items-center justify-between">
+            <div>No recent shopping lists found</div>
+            <Button size={"sm"} onClick={() => router.push("/shopping-lists")}>
+              New List
+            </Button>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }

@@ -1,5 +1,4 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import RecentList from "~/components/shopping-lists/recent-list";
 import {
@@ -10,28 +9,22 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import { NoPartner } from "./_components/no-partner";
+import { UncompleteProfile } from "./_components/uncomplete-profile";
 
 export default function Home() {
-  const { sessionClaims } = auth();
   return (
     <main
       className="flex flex-col items-center justify-between p-4"
       suppressHydrationWarning
     >
       <section className="w-full md:max-w-screen-sm">
-        <br />
         <div className="flex flex-col gap-4">
           <SignedIn>
-            <Card>
-              <CardHeader>
-                <CardTitle>
-                  Welcome, {sessionClaims?.username as string}! 👋
-                </CardTitle>
-                <CardDescription>
-                  Welcome to homely, an app to help you manage your home.
-                </CardDescription>
-              </CardHeader>
-            </Card>
+            <div className="flex h-full flex-col justify-between gap-4 md:flex-row">
+              <UncompleteProfile />
+              <NoPartner />
+            </div>
             <RecentList />
             <Card>
               <CardHeader>

@@ -96,6 +96,7 @@ export default function OnboardingForm() {
       <CardFooter className="flex w-full justify-end gap-2">
         {step > 1 && (
           <Button
+            size={"sm"}
             variant={"outline"}
             onClick={() => setStep((prev) => prev - 1)}
           >
@@ -103,9 +104,12 @@ export default function OnboardingForm() {
           </Button>
         )}
         {step < 4 ? (
-          <Button onClick={() => setStep((prev) => prev + 1)}>Next</Button>
+          <Button size={"sm"} onClick={() => setStep((prev) => prev + 1)}>
+            Next
+          </Button>
         ) : (
           <Button
+            size={"sm"}
             type="submit"
             disabled={createUser.isPending}
             onClick={() => onSubmit()}

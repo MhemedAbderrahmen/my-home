@@ -47,16 +47,18 @@ export default function TopNav() {
               <p>Inventory</p>
             </TooltipContent>
           </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button size={"icon"} variant={"outline"} className="text-lg">
-                🔧
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Maintenance</p>
-            </TooltipContent>
-          </Tooltip>
+          <SignedIn>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button size={"icon"} variant={"outline"} className="text-lg">
+                  🧑
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Profile</p>
+              </TooltipContent>
+            </Tooltip>
+          </SignedIn>
           {/* <Button size={"icon"} variant={"outline"} className="text-lg">
             👪
           </Button>

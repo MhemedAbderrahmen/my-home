@@ -97,7 +97,7 @@ export default function InventoryList() {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={isPending}>
+            <Button size={"sm"} type="submit" disabled={isPending}>
               {isPending ? (
                 <Loader2 className="mr-2 animate-spin" size={16} />
               ) : (
