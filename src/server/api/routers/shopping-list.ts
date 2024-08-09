@@ -21,9 +21,9 @@ export const shoppingListRouter = createTRPCRouter({
       });
     }),
 
-  getAll: publicProcedure.query(async ({ ctx }) => {
+  getAll: protectedProcedure.query(async ({ ctx }) => {
     const groceries = await ctx.db.shoppingList.findMany({
-      where: { paid: false },
+      where: { paid: false, userId: ctx.user.userId },
       orderBy: { createdAt: "asc" },
       include: {
         groceries: true,
@@ -32,9 +32,9 @@ export const shoppingListRouter = createTRPCRouter({
     return groceries;
   }),
 
-  getPaidLists: publicProcedure.query(async ({ ctx }) => {
+  getPaidLists: protectedProcedure.query(async ({ ctx }) => {
     const groceries = await ctx.db.shoppingList.findMany({
-      where: { paid: true },
+      where: { paid: true, userId: ctx.user.userId },
       orderBy: { createdAt: "asc" },
       include: {
         groceries: true,
