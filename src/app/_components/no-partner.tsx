@@ -1,4 +1,6 @@
+"use client";
 import { Link } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -9,6 +11,7 @@ import {
 } from "~/components/ui/card";
 
 export const NoPartner = () => {
+  const router = useRouter();
   return (
     <Card className="h-full">
       <CardHeader>
@@ -19,7 +22,11 @@ export const NoPartner = () => {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-4">
-          <Button size={"sm"} variant={"outline"}>
+          <Button
+            size={"sm"}
+            variant={"outline"}
+            onClick={() => router.push("/link-partner")}
+          >
             <Link className="mr-2 size-4" />
             Link Partner Account
           </Button>

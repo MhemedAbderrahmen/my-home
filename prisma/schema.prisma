@@ -60,7 +60,7 @@ model Inventory {
     updatedAt DateTime @updatedAt
 
     Groceries Groceries[]
-    household household?
+    household Household?
 }
 
 model User {
@@ -71,10 +71,10 @@ model User {
 
     createdAt DateTime    @default(now())
     updatedAt DateTime    @updatedAt
-    household household[]
+    household Household[]
 }
 
-model household {
+model Household {
     id          Int       @id @default(autoincrement())
     inventoryId Int       @unique
     userId      String
@@ -82,4 +82,15 @@ model household {
     updatedAt   DateTime  @updatedAt
     Inventory   Inventory @relation(fields: [inventoryId], references: [id])
     User        User      @relation(fields: [userId], references: [clerkId])
+}
+
+model PartnerCode {
+    id        Int      @id @default(autoincrement())
+    code      String   @unique
+    creatorId String
+    isExpired Boolean
+    expireAt  DateTime
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
