@@ -1,13 +1,18 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { z } from "zod";
 import { api } from "~/trpc/react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import { Input } from "../ui/input";
 import { completeOnboarding } from "./_actions";
 
 const First = () => {
@@ -49,10 +54,62 @@ const Fourth = () => {
   );
 };
 
+const formSchema = z.object({
+  username: z.string(),
+});
+
+const Fifth = ({
+  setUsername,
+}: {
+  setUsername: Dispatch<SetStateAction<string>>;
+}) => {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setUsername(values.username);
+  }
+
+  return (
+    <CardContent>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+        >
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Username</FormLabel>
+                <FormControl>
+                  <Input placeholder="Username" {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
+          <p>
+            By Filling this you will be able to send partner links access more
+            functionalities
+          </p>
+        </form>
+      </Form>
+    </CardContent>
+  );
+};
+
 export default function OnboardingForm() {
   const { user } = useUser();
   const router = useRouter();
+
   const [step, setStep] = useState<number>(1);
+  const [username, setUsername] = useState<string>("");
 
   const initiHousehold = api.household.create.useMutation({
     onMutate() {
@@ -75,13 +132,19 @@ export default function OnboardingForm() {
   });
 
   async function onSubmit() {
-    await createUser.mutateAsync();
-    await initiHousehold.mutateAsync();
-
-    await completeOnboarding();
-    await user?.reload();
-
-    router.push("/");
+    if (!username) {
+      toast.error("Fill in your username");
+    } else {
+      await createUser.mutateAsync({
+        email: user?.primaryEmailAddress?.emailAddress ?? "",
+        username,
+        imageUrl: user?.imageUrl ?? '',
+      });
+      await initiHousehold.mutateAsync();
+      await completeOnboarding();
+      await user?.reload();
+      router.push("/");
+    }
   }
 
   return (
@@ -89,10 +152,13 @@ export default function OnboardingForm() {
       <CardHeader>
         <h2 className="text-xl font-semibold">Welcome to Homely</h2>
       </CardHeader>
+
       {step === 1 && <First />}
       {step === 2 && <Second />}
       {step === 3 && <Third />}
       {step === 4 && <Fourth />}
+      {step === 5 && <Fifth setUsername={setUsername} />}
+
       <CardFooter className="flex w-full justify-end gap-2">
         {step > 1 && (
           <Button
@@ -103,7 +169,7 @@ export default function OnboardingForm() {
             Back
           </Button>
         )}
-        {step < 4 ? (
+        {step < 5 ? (
           <Button size={"sm"} onClick={() => setStep((prev) => prev + 1)}>
             Next
           </Button>

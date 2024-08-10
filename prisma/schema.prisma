@@ -64,14 +64,24 @@ model Inventory {
 }
 
 model User {
-    id      Int    @id @default(autoincrement())
-    clerkId String @unique
-
+    id              Int     @id @default(autoincrement())
+    clerkId         String  @unique
+    username        String  @unique
+    email           String
+    imageUrl        String
     firstTimeSignIn Boolean @default(false)
 
-    createdAt DateTime    @default(now())
-    updatedAt DateTime    @updatedAt
-    household Household[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    household   Household[]
+    PartnerCode PartnerCode[]
+}
+
+model Partners {
+    id               Int    @id @default(autoincrement())
+    mainPartner      String
+    secondaryPartner String
 }
 
 model Household {
@@ -87,10 +97,11 @@ model Household {
 model PartnerCode {
     id        Int      @id @default(autoincrement())
     code      String   @unique
-    creatorId String
+    userId    String
     isExpired Boolean
     expireAt  DateTime
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    creator   User     @relation(fields: [userId], references: [clerkId])
 }

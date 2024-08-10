@@ -1,6 +1,8 @@
 "use client";
 import { Link } from "lucide-react";
 import { useRouter } from "next/navigation";
+import PartnerCard from "~/components/link-partner/partner-card";
+import { SkeletonLine } from "~/components/skeleton-line";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -9,9 +11,13 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import { api } from "~/trpc/react";
 
 export const NoPartner = () => {
   const router = useRouter();
+  const { data, isPending } = api.partners.get.useQuery();
+  if (isPending) return <SkeletonLine />;
+  if (data) return <PartnerCard userId={data.secondaryPartner} />;
   return (
     <Card className="h-full">
       <CardHeader>

@@ -5,7 +5,7 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 export const partnerCodeRouter = createTRPCRouter({
   create: protectedProcedure.mutation(async ({ ctx }) => {
     await ctx.db.partnerCode.updateMany({
-      where: { creatorId: ctx.user.userId },
+      where: { userId: ctx.user.userId },
       data: {
         isExpired: true,
       },
@@ -14,7 +14,7 @@ export const partnerCodeRouter = createTRPCRouter({
     const createdCode = await ctx.db.partnerCode.create({
       data: {
         code: crypto.randomUUID(),
-        creatorId: ctx.user.userId,
+        userId: ctx.user.userId,
         expireAt: dayjs(Date.now()).add(1, "h").toDate(),
         isExpired: false,
       },
@@ -29,10 +29,62 @@ export const partnerCodeRouter = createTRPCRouter({
         code: z.string(),
       }),
     )
-    .query(async ({ ctx, input }) => {
-      return await ctx.db.partnerCode.findFirst({
+    .mutation(async ({ ctx, input }) => {
+      const isFound = await ctx.db.partnerCode.findFirst({
         where: {
           code: input.code,
+          isExpired: false,
+          // userId: {
+          //   not: ctx.user.userId,
+          // },
+        },
+        include: {
+          creator: true,
+        },
+      });
+      if (!isFound) throw new Error("Code not found!");
+      return isFound;
+    }),
+
+  accept: protectedProcedure
+    .input(
+      z.object({
+        code: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const mainPartner = await ctx.db.partnerCode.update({
+        where: {
+          code: input.code,
+        },
+        data: {
+          isExpired: true,
+        },
+      });
+
+      await ctx.db.partners.create({
+        data: {
+          mainPartner: mainPartner.userId,
+          secondaryPartner: ctx.user.userId,
+        },
+      });
+
+      return { success: true };
+    }),
+
+  decline: protectedProcedure
+    .input(
+      z.object({
+        code: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.partnerCode.update({
+        where: {
+          code: input.code,
+        },
+        data: {
+          isExpired: true,
         },
       });
     }),

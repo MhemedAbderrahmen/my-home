@@ -11,7 +11,7 @@ import {
 
 export const UncompleteProfile = () => {
   return (
-    <Card className="h-full">
+    <Card className="min-h-48">
       <CardHeader>
         <CardTitle>Welcome! 👋</CardTitle>
         <CardDescription>

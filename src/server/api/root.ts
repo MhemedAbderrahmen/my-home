@@ -3,6 +3,7 @@ import { groceriesRouter } from "./routers/groceries";
 import { householdRouter } from "./routers/household";
 import { inventoryRouter } from "./routers/inventory";
 import { partnerCodeRouter } from "./routers/partner-code";
+import { partnersRouter } from "./routers/partners";
 import { shoppingListRouter } from "./routers/shopping-list";
 import { userRouter } from "./routers/user";
 
@@ -18,6 +19,7 @@ export const appRouter = createTRPCRouter({
   user: userRouter,
   household: householdRouter, // Add the household router to the appRouter
   partnerCode: partnerCodeRouter,
+  partners: partnersRouter,
 });
 
 // export type definition of API

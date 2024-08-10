@@ -21,7 +21,7 @@ export default function Home() {
       <section className="w-full md:max-w-screen-sm">
         <div className="flex flex-col gap-4">
           <SignedIn>
-            <div className="flex h-full flex-col justify-between gap-4 md:flex-row">
+            <div className="flex min-h-48 flex-col justify-between gap-4 md:flex-row">
               <UncompleteProfile />
               <NoPartner />
             </div>
