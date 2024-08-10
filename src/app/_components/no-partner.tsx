@@ -2,7 +2,7 @@
 import { Link } from "lucide-react";
 import { useRouter } from "next/navigation";
 import PartnerCard from "~/components/link-partner/partner-card";
-import { SkeletonLine } from "~/components/skeleton-line";
+import { SkeletonCard } from "~/components/skeleton-card";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -16,7 +16,7 @@ import { api } from "~/trpc/react";
 export const NoPartner = () => {
   const router = useRouter();
   const { data, isPending } = api.partners.get.useQuery();
-  if (isPending) return <SkeletonLine />;
+  if (isPending) return <SkeletonCard />;
   if (data) return <PartnerCard userId={data.secondaryPartner} />;
   return (
     <Card className="h-full">

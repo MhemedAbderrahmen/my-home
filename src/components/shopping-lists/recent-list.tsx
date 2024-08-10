@@ -4,7 +4,7 @@ import { EyeIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { DEFAULT_DATE_FORMAT } from "~/lib/constants";
 import { api } from "~/trpc/react";
-import { SkeletonLine } from "../skeleton-line";
+import { SkeletonCard } from "../skeleton-card";
 import { Button } from "../ui/button";
 import {
   Card,
@@ -18,7 +18,7 @@ export default function RecentList() {
   const router = useRouter();
   const { data, isPending } = api.shoppingList.getLatest.useQuery();
 
-  if (isPending) return <SkeletonLine />;
+  if (isPending) return <SkeletonCard />;
   return (
     <Card className="col-span-1">
       <CardHeader>
