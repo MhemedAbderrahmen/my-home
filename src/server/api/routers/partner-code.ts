@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const partnerCodeRouter = createTRPCRouter({
@@ -21,4 +22,18 @@ export const partnerCodeRouter = createTRPCRouter({
 
     return createdCode;
   }),
+
+  get: protectedProcedure
+    .input(
+      z.object({
+        code: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.partnerCode.findFirst({
+        where: {
+          code: input.code,
+        },
+      });
+    }),
 });

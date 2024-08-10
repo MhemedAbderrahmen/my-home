@@ -1,3 +1,4 @@
+import ApplyCode from "~/components/link-partner/apply-code";
 import CodeGenerator from "~/components/link-partner/code-generator";
 
 export default function LinkPartner() {
@@ -5,6 +6,7 @@ export default function LinkPartner() {
     <main className="flex w-full flex-col items-center justify-center gap-4 p-4">
       <section className="flex w-full flex-col gap-4 md:max-w-screen-sm">
         <CodeGenerator />
+        <ApplyCode />
       </section>
     </main>
   );
