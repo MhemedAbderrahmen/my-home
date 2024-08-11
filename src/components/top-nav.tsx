@@ -20,7 +20,7 @@ export default function TopNav() {
               </Link>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Home</p>
+              <p className="leading-7 [&:not(:first-child)]:mt-6">Home</p>
             </TooltipContent>
           </Tooltip>
           <Tooltip>
@@ -32,7 +32,7 @@ export default function TopNav() {
               </Link>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Groceries</p>
+              <p className="leading-7 [&:not(:first-child)]:mt-6">Groceries</p>
             </TooltipContent>
           </Tooltip>
           <Tooltip>
@@ -44,18 +44,20 @@ export default function TopNav() {
               </Link>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Inventory</p>
+              <p className="leading-7 [&:not(:first-child)]:mt-6">Inventory</p>
             </TooltipContent>
           </Tooltip>
           <SignedIn>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button size={"icon"} variant={"outline"} className="text-lg">
-                  🧑
-                </Button>
+                <Link href="/profile">
+                  <Button size={"icon"} variant={"outline"} className="text-lg">
+                    🧑
+                  </Button>
+                </Link>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Profile</p>
+                <p className="leading-7 [&:not(:first-child)]:mt-6">Profile</p>
               </TooltipContent>
             </Tooltip>
           </SignedIn>

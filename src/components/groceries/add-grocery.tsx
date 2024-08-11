@@ -34,6 +34,16 @@ const formSchema = z.object({
 });
 
 export default function AddGrocery({ id }: { id: number }) {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      itemName: "",
+      quantity: 0,
+      threshhold: 0,
+      unit: "",
+    },
+  });
+
   const utils = api.useUtils();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -46,16 +56,6 @@ export default function AddGrocery({ id }: { id: number }) {
     },
     onMutate() {
       toast.loading("Creating shopping list", { id: "create-shopping-list" });
-    },
-  });
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      itemName: "",
-      quantity: 0,
-      threshhold: 0,
-      unit: "",
     },
   });
 

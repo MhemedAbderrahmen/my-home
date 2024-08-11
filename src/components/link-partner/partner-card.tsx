@@ -1,13 +1,7 @@
 import { api } from "~/trpc/react";
 import { SkeletonLine } from "../skeleton-line";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
 
 export default function Partnership({
   primaryUserId,
@@ -28,7 +22,9 @@ export default function Partnership({
   return (
     <Card className="min-h-48">
       <CardHeader>
-        <CardTitle>You have a partner!</CardTitle>
+        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+          You have a partner!
+        </h4>
         <CardDescription>
           You already have a partner, you cant have more than one
         </CardDescription>

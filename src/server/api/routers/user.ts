@@ -36,6 +36,18 @@ export const userRouter = createTRPCRouter({
     });
   }),
 
+  me: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.db.user.findFirst({
+      where: {
+        clerkId: ctx.user.userId,
+      },
+      include: {
+        household: true,
+        partners: true,
+      },
+    });
+  }),
+
   get: protectedProcedure
     .input(
       z.object({
@@ -46,6 +58,25 @@ export const userRouter = createTRPCRouter({
       return ctx.db.user.findFirst({
         where: {
           clerkId: input.userId,
+        },
+      });
+    }),
+
+  update: protectedProcedure
+    .input(
+      z.object({
+        username: z.string(),
+        email: z.string().email(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.user.update({
+        where: {
+          clerkId: ctx.user.userId,
+        },
+        data: {
+          username: input.username,
+          email: input.email,
         },
       });
     }),

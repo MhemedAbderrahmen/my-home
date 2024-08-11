@@ -8,13 +8,7 @@ import { z } from "zod";
 import { api } from "~/trpc/react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { Input } from "../ui/input";
 
@@ -73,7 +67,9 @@ export default function ApplyCode() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>I have a partner code</CardTitle>
+        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+          I have a partner code
+        </h4>
         <CardDescription>
           You recieved a partner code? Paste it here and you will link up
           automatically

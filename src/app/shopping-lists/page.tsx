@@ -1,12 +1,7 @@
 import AddShoppingList from "~/components/shopping-lists/add-shopping-list";
 import ListShoppingLists from "~/components/shopping-lists/list-shopping-lists";
 import ListShoppingPaid from "~/components/shopping-lists/list-shopping-paid";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
+import { Card, CardDescription, CardHeader } from "~/components/ui/card";
 
 export default function ShoppingLists() {
   return (
@@ -14,10 +9,12 @@ export default function ShoppingLists() {
       <section className="flex w-full flex-col gap-4 md:max-w-screen-sm">
         <Card>
           <CardHeader>
-            <CardTitle className="flex w-full flex-row items-center justify-between">
-              🛒 Shopping Lists
+            <div className="flex w-full flex-row items-center justify-between">
+              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                🛒 Shopping Lists
+              </h4>
               <AddShoppingList />
-            </CardTitle>
+            </div>
             <CardDescription>Add a new shopping list</CardDescription>
           </CardHeader>
         </Card>

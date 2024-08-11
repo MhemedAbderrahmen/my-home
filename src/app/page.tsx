@@ -7,11 +7,10 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "~/components/ui/card";
 import { HydrateClient } from "~/trpc/server";
 import { Partner } from "./_components/no-partner";
-import { UncompleteProfile } from "./_components/uncomplete-profile";
+import { WelcomeWithAuth } from "./_components/welcome-with-auth";
 
 export default function Home() {
   return (
@@ -23,12 +22,14 @@ export default function Home() {
         <section className="w-full md:max-w-screen-sm">
           <div className="flex flex-col gap-4">
             <SignedIn>
-              <UncompleteProfile />
+              <WelcomeWithAuth />
               <Partner />
               <RecentList />
               <Card>
                 <CardHeader>
-                  <CardTitle>Expenses</CardTitle>
+                  <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                    Expenses
+                  </h4>
                   <CardDescription>
                     Your monthly shopping list expenses
                   </CardDescription>
@@ -38,13 +39,17 @@ export default function Home() {
             <SignedOut>
               <Card>
                 <CardHeader>
-                  <CardTitle>Welcome 👋</CardTitle>
+                  <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                    Welcome 👋
+                  </h4>
                   <CardDescription>
                     Welcome to homely, an app to help you manage your home.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p>Please sign in to start managing your home</p>
+                  <p className="leading-7 [&:not(:first-child)]:mt-6">
+                    Please sign in to start managing your home
+                  </p>
                 </CardContent>
                 <CardFooter className="justify-center">
                   <Link

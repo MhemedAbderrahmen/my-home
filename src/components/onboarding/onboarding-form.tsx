@@ -18,7 +18,7 @@ import { completeOnboarding } from "./_actions";
 const First = () => {
   return (
     <CardContent>
-      <p>
+      <p className="leading-7 [&:not(:first-child)]:mt-6">
         Welcome to MyHome! Manage your groceries, shopping lists, and home
         inventory with ease.
       </p>
@@ -28,14 +28,16 @@ const First = () => {
 const Second = () => {
   return (
     <CardContent>
-      <p>Easily create shopping lists and add groceries to stay organized.</p>
+      <p className="leading-7 [&:not(:first-child)]:mt-6">
+        Easily create shopping lists and add groceries to stay organized.
+      </p>
     </CardContent>
   );
 };
 const Third = () => {
   return (
     <CardContent>
-      <p>
+      <p className="leading-7 [&:not(:first-child)]:mt-6">
         Keep track of your home inventory, add or remove items, and never run
         out of essentials.
       </p>
@@ -46,7 +48,7 @@ const Third = () => {
 const Fourth = () => {
   return (
     <CardContent>
-      <p>
+      <p className="leading-7 [&:not(:first-child)]:mt-6">
         Automatically transfer items from your shopping list to your inventory
         once you check out.
       </p>
@@ -92,14 +94,17 @@ const Fifth = ({
                   <Input
                     {...field}
                     placeholder="Username"
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      setUsername(e.target.value);
+                    }}
                   />
                 </FormControl>
               </FormItem>
             )}
           />
 
-          <p>
+          <p className="leading-7 [&:not(:first-child)]:mt-6">
             By Filling this you will be able to send partner links access more
             functionalities
           </p>

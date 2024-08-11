@@ -6,13 +6,7 @@ import { DEFAULT_DATE_FORMAT } from "~/lib/constants";
 import { api } from "~/trpc/react";
 import { SkeletonCard } from "../skeleton-card";
 import { Button } from "../ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
 
 export default function RecentList() {
   const router = useRouter();
@@ -22,7 +16,9 @@ export default function RecentList() {
   return (
     <Card className="col-span-1">
       <CardHeader>
-        <CardTitle>Shopping Lists</CardTitle>
+        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+          Shopping Lists
+        </h4>
         <CardDescription>Most Recent Shopping List: Groceries</CardDescription>
       </CardHeader>
       <CardContent>

@@ -1,7 +1,6 @@
 "use client";
-import { Link } from "lucide-react";
+import { SettingsIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import Partnership from "~/components/link-partner/partner-card";
 import { SkeletonCard } from "~/components/skeleton-card";
 import { Button } from "~/components/ui/button";
 import {
@@ -12,40 +11,32 @@ import {
 } from "~/components/ui/card";
 import { api } from "~/trpc/react";
 
-export const Partner = () => {
+export const WelcomeWithAuth = () => {
+  const { data, isPending } = api.user.me.useQuery();
   const router = useRouter();
-  const { data, isPending } = api.user.hasPartner.useQuery();
-
   if (isPending) return <SkeletonCard />;
-  if (data)
-    return (
-      <Partnership
-        primaryUserId={data.partners?.mainPartner ?? ""}
-        secondaryUserId={data.partners?.secondaryPartner ?? ""}
-      />
-    );
   return (
     <Card className="min-h-48">
       <CardHeader>
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-          Partner Up!
+          Welcome, {data?.username}! 👋
         </h4>
         <CardDescription>
-          If you have a partner, you can invite them to join you on homely.
+          Welcome to homely, an app to help you manage your home.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col gap-4">
+        <div className="flex w-full flex-col gap-4">
           <p className="leading-7 [&:not(:first-child)]:mt-6">
-            You can link with your partner and manage your home together!
+            Complete your profile for a better experience!
           </p>
           <Button
             size={"sm"}
             variant={"outline"}
-            onClick={() => router.push("/link-partner")}
+            onClick={() => router.push("/profile")}
           >
-            <Link className="mr-2 size-4" />
-            Link Partner Account
+            <SettingsIcon className="mr-2 size-4" />
+            Profile Settings
           </Button>
         </div>
       </CardContent>
