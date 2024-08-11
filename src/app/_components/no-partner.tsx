@@ -1,7 +1,7 @@
 "use client";
 import { Link } from "lucide-react";
 import { useRouter } from "next/navigation";
-import PartnerCard from "~/components/link-partner/partner-card";
+import Partnership from "~/components/link-partner/partner-card";
 import { SkeletonCard } from "~/components/skeleton-card";
 import { Button } from "~/components/ui/button";
 import {
@@ -13,13 +13,20 @@ import {
 } from "~/components/ui/card";
 import { api } from "~/trpc/react";
 
-export const NoPartner = () => {
+export const Partner = () => {
   const router = useRouter();
-  const { data, isPending } = api.partners.get.useQuery();
+  const { data, isPending } = api.user.hasPartner.useQuery();
+
   if (isPending) return <SkeletonCard />;
-  if (data) return <PartnerCard userId={data.secondaryPartner} />;
+  if (data)
+    return (
+      <Partnership
+        primaryUserId={data.partners?.mainPartner ?? ""}
+        secondaryUserId={data.partners?.secondaryPartner ?? ""}
+      />
+    );
   return (
-    <Card className="h-full">
+    <Card className="min-h-48">
       <CardHeader>
         <CardTitle>Partner Up!</CardTitle>
         <CardDescription>
@@ -28,6 +35,7 @@ export const NoPartner = () => {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-4">
+          <p>You can link with your partner and manage your home together!</p>
           <Button
             size={"sm"}
             variant={"outline"}

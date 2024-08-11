@@ -34,9 +34,9 @@ export const partnerCodeRouter = createTRPCRouter({
         where: {
           code: input.code,
           isExpired: false,
-          // userId: {
-          //   not: ctx.user.userId,
-          // },
+          userId: {
+            not: ctx.user.userId,
+          },
         },
         include: {
           creator: true,
@@ -62,10 +62,21 @@ export const partnerCodeRouter = createTRPCRouter({
         },
       });
 
-      await ctx.db.partners.create({
+      const partnership = await ctx.db.partners.create({
         data: {
           mainPartner: mainPartner.userId,
           secondaryPartner: ctx.user.userId,
+        },
+      });
+
+      await ctx.db.user.updateMany({
+        where: {
+          clerkId: {
+            in: [partnership.mainPartner, partnership.secondaryPartner],
+          },
+        },
+        data: {
+          partnersId: partnership.id,
         },
       });
 

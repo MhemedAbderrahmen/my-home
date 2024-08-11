@@ -71,6 +71,7 @@ const Fifth = ({
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log("🚀 ~ onSubmit ~ values:", values);
     setUsername(values.username);
   }
 
@@ -88,7 +89,11 @@ const Fifth = ({
               <FormItem className="w-full">
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input placeholder="Username" {...field} />
+                  <Input
+                    {...field}
+                    placeholder="Username"
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
                 </FormControl>
               </FormItem>
             )}
@@ -132,13 +137,14 @@ export default function OnboardingForm() {
   });
 
   async function onSubmit() {
+    console.log("🚀 ~ onSubmit ~ username:", username);
     if (!username) {
       toast.error("Fill in your username");
     } else {
       await createUser.mutateAsync({
         email: user?.primaryEmailAddress?.emailAddress ?? "",
         username,
-        imageUrl: user?.imageUrl ?? '',
+        imageUrl: user?.imageUrl ?? "",
       });
       await initiHousehold.mutateAsync();
       await completeOnboarding();

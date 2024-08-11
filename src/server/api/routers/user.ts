@@ -22,6 +22,20 @@ export const userRouter = createTRPCRouter({
       return createdUser.id;
     }),
 
+  hasPartner: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.db.user.findFirst({
+      where: {
+        clerkId: ctx.user.userId,
+        partnersId: {
+          not: null,
+        },
+      },
+      include: {
+        partners: true,
+      },
+    });
+  }),
+
   get: protectedProcedure
     .input(
       z.object({

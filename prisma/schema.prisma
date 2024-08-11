@@ -76,12 +76,16 @@ model User {
 
     household   Household[]
     PartnerCode PartnerCode[]
+
+    partners   Partners? @relation(fields: [partnersId], references: [id])
+    partnersId Int?
 }
 
 model Partners {
     id               Int    @id @default(autoincrement())
     mainPartner      String
     secondaryPartner String
+    User             User[]
 }
 
 model Household {
