@@ -5,13 +5,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { api } from "~/trpc/react";
 import { Button } from "../ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
 
 export default function CodeGenerator() {
   const [isCopied, setIsCopied] = useState(false);
@@ -36,11 +30,13 @@ export default function CodeGenerator() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Link Your Home Partner 🔗</CardTitle>
+        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+          Link Your Home Partner 🔗
+        </h4>
         <CardDescription>Link Your Home Partner</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
-        <p>
+        <p className="leading-7 [&:not(:first-child)]:mt-6">
           You can generate a partner code here and send it to your partner to
           link up!
         </p>

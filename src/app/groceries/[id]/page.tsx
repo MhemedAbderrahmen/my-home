@@ -1,11 +1,6 @@
 import AddGrocery from "~/components/groceries/add-grocery";
 import ListGroceries from "~/components/groceries/list-groceries";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
+import { Card, CardDescription, CardHeader } from "~/components/ui/card";
 import { HydrateClient } from "~/trpc/server";
 
 export default function Groceries({ params }: { params: { id: number } }) {
@@ -15,10 +10,12 @@ export default function Groceries({ params }: { params: { id: number } }) {
         <section className="flex w-full flex-col gap-4 md:max-w-screen-sm">
           <Card>
             <CardHeader>
-              <CardTitle className="flex w-full flex-row items-center justify-between">
-                🛒 Groceries Lists
+              <div className="flex w-full flex-row items-center justify-between">
+                <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                  🛒 Groceries Lists
+                </h4>
                 <AddGrocery id={params.id} />
-              </CardTitle>
+              </div>
               <CardDescription>
                 Add a new grocery item to your list
               </CardDescription>

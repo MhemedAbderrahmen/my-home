@@ -1,11 +1,6 @@
 import { Suspense } from "react";
 import InventoryList from "~/components/inventory/inventory-list";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
+import { Card, CardDescription, CardHeader } from "~/components/ui/card";
 import { HydrateClient } from "~/trpc/server";
 
 export default function Inventory() {
@@ -15,9 +10,9 @@ export default function Inventory() {
         <section className="flex w-full flex-col gap-4 md:max-w-screen-sm">
           <Card>
             <CardHeader>
-              <CardTitle className="flex w-full flex-row items-center justify-between">
+              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
                 📦 House Inventory
-              </CardTitle>
+              </h4>
               <CardDescription>Manage your house inventory</CardDescription>
             </CardHeader>
           </Card>
