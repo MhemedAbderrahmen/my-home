@@ -19,10 +19,13 @@ import {
   FormLabel,
 } from "../ui/form";
 import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const formSchema = z.object({
   username: z.string(),
   email: z.string().email(),
+  bio: z.string(),
 });
 
 export default function GeneralForm() {
@@ -71,6 +74,15 @@ export default function GeneralForm() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-4 p-2"
           >
+            <div className="flex w-full flex-col items-center justify-center">
+              <div>
+                <Avatar>
+                  <AvatarImage src={data?.imageUrl} className="size-12" />
+                  <AvatarFallback>{data?.username}</AvatarFallback>
+                </Avatar>
+              </div>
+            </div>
+
             <FormField
               control={form.control}
               name="username"
@@ -96,6 +108,24 @@ export default function GeneralForm() {
                     <Input placeholder="johndoe@gmail.com" {...field} />
                   </FormControl>
                   <FormDescription>Your primary e-mail address</FormDescription>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="bio"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Bio / Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Type in your bio or description that will be displayed on your profile!"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    This describe you and your interests
+                  </FormDescription>
                 </FormItem>
               )}
             />
