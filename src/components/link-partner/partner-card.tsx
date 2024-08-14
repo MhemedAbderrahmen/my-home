@@ -23,7 +23,7 @@ export default function Partnership({
     <Card className="min-h-48">
       <CardHeader>
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-          You have a partner!
+          Shared with partner
         </h4>
         <CardDescription>
           You already have a partner, you cant have more than one

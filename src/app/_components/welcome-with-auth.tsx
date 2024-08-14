@@ -31,11 +31,7 @@ export const WelcomeWithAuth = () => {
             <p className="leading-7 [&:not(:first-child)]:mt-6">
               Complete your profile for a better experience!
             </p>
-            <Button
-              size={"sm"}
-              variant={"outline"}
-              onClick={() => router.push("/profile")}
-            >
+            <Button size={"sm"} onClick={() => router.push("/profile")}>
               <SettingsIcon className="mr-2 size-4" />
               Profile Settings
             </Button>
