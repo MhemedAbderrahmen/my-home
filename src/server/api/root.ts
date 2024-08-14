@@ -1,4 +1,5 @@
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
+import { expensesRouter } from "./routers/expenses";
 import { groceriesRouter } from "./routers/groceries";
 import { householdRouter } from "./routers/household";
 import { inventoryRouter } from "./routers/inventory";
@@ -20,6 +21,7 @@ export const appRouter = createTRPCRouter({
   household: householdRouter, // Add the household router to the appRouter
   partnerCode: partnerCodeRouter,
   partners: partnersRouter,
+  expenses: expensesRouter,
 });
 
 // export type definition of API

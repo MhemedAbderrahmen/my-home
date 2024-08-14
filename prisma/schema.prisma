@@ -69,7 +69,8 @@ model User {
     username        String  @unique
     email           String
     imageUrl        String
-    firstTimeSignIn Boolean @default(false)
+    firstTimeSignIn Boolean @default(true)
+    description     String? @default("")
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

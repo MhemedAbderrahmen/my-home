@@ -4,7 +4,7 @@ import ApplyCode from "~/components/link-partner/apply-code";
 import CodeGenerator from "~/components/link-partner/code-generator";
 import Partnership from "~/components/link-partner/partner-card";
 import { SkeletonCard } from "~/components/skeleton-card";
-import { Card, CardHeader } from "~/components/ui/card";
+import { Card, CardDescription, CardHeader } from "~/components/ui/card";
 import { api } from "~/trpc/react";
 
 export default function PartnerCheck() {
@@ -19,13 +19,18 @@ export default function PartnerCheck() {
     );
   return (
     <section className="flex w-full flex-col gap-4 md:max-w-screen-sm">
-      <CodeGenerator />
-      <ApplyCode />
       <Card>
         <CardHeader>
-          WIP: This feature is still work in progress.
+          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+            WIP: This section is still work in progress
+          </h4>
+          <CardDescription>
+            You can generate a link or accept a partner invite by filling the "I have a partner" Section
+          </CardDescription>
         </CardHeader>
       </Card>
+      <CodeGenerator />
+      <ApplyCode />
     </section>
   );
-}
+} 

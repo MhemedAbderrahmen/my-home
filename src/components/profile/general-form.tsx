@@ -1,5 +1,4 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
@@ -19,19 +18,23 @@ import {
   FormLabel,
 } from "../ui/form";
 import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 
 const formSchema = z.object({
   username: z.string(),
   email: z.string().email(),
+  description: z.string().optional(),
 });
 
 export default function GeneralForm() {
+  const utils = api.useUtils();
   const { data, isPending } = api.user.me.useQuery();
   const updateProfile = api.user.update.useMutation({
     onMutate() {
       toast.loading("Updating profile...", { id: "update-profile" });
     },
-    onSuccess() {
+    async onSuccess() {
+      await utils.user.me.invalidate();
       toast.dismiss("update-profile");
       toast.success("Profile updated");
     },
@@ -42,6 +45,7 @@ export default function GeneralForm() {
     defaultValues: {
       email: "",
       username: "",
+      description: "",
     },
   });
 
@@ -53,6 +57,7 @@ export default function GeneralForm() {
     if (data) {
       form.setValue("email", data.email);
       form.setValue("username", data.username);
+      form.setValue("description", data.description ?? "");
     }
   }, [data]);
 
@@ -94,6 +99,22 @@ export default function GeneralForm() {
                   <FormLabel>E-mail</FormLabel>
                   <FormControl>
                     <Input placeholder="johndoe@gmail.com" {...field} />
+                  </FormControl>
+                  <FormDescription>Your primary e-mail address</FormDescription>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Your profile description"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>Your primary e-mail address</FormDescription>
                 </FormItem>

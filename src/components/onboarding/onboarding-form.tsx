@@ -142,7 +142,6 @@ export default function OnboardingForm() {
   });
 
   async function onSubmit() {
-    console.log("🚀 ~ onSubmit ~ username:", username);
     if (!username) {
       toast.error("Fill in your username");
     } else {
