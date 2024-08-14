@@ -25,7 +25,8 @@ export default function PartnerCheck() {
             WIP: This section is still work in progress
           </h4>
           <CardDescription>
-            You can generate a link or accept a partner invite by filling the "I have a partner" Section
+            You can generate a link or accept a partner invite by filling the
+            &quot; I&apos;have a partner&quot; Section
           </CardDescription>
         </CardHeader>
       </Card>
@@ -33,4 +34,4 @@ export default function PartnerCheck() {
       <ApplyCode />
     </section>
   );
-} 
+}
