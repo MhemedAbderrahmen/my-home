@@ -74,7 +74,7 @@ export default function AddGrocery({ id }: { id: number }) {
           Grocery
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="h-[600px]">
+      <DrawerContent className="h-[600px] p-2">
         <DrawerHeader>
           <DrawerTitle>Add a new grocery to the list</DrawerTitle>
           <DrawerDescription>
@@ -92,13 +92,19 @@ export default function AddGrocery({ id }: { id: number }) {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="db">
-            Make changes to your account here.
+            <div className="flex flex-col items-center justify-center text-center">
+              <div>WIP: This section is still work in progress</div>
+              <div className="text-muted-foreground">
+                You will be able to select items directly from our items
+                database
+              </div>
+            </div>
           </TabsContent>
           <TabsContent value="custom">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="flex flex-col gap-4 p-2"
+                className="flex flex-col gap-4"
               >
                 <FormField
                   control={form.control}

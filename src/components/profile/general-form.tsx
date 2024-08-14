@@ -116,7 +116,9 @@ export default function GeneralForm() {
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>Your primary e-mail address</FormDescription>
+                  <FormDescription>
+                    Your primary bio / description
+                  </FormDescription>
                 </FormItem>
               )}
             />
