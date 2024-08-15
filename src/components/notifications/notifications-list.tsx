@@ -5,6 +5,10 @@ import { api } from "~/trpc/react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader } from "../ui/card";
 
+function InviteNotification() {
+  return <div></div>;
+}
+
 export function NotificationsList() {
   const { data } = api.notifications.get.useQuery();
   return (
