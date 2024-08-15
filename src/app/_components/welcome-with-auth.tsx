@@ -16,7 +16,7 @@ export const WelcomeWithAuth = () => {
   const router = useRouter();
   if (isPending) return <SkeletonCard />;
   return (
-    <Card className="min-h-48">
+    <Card>
       <CardHeader>
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
           Welcome, {data?.username}! 👋
@@ -25,21 +25,23 @@ export const WelcomeWithAuth = () => {
           Welcome to homely, an app to help you manage your home.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="flex w-full flex-col gap-4">
-          <p className="leading-7 [&:not(:first-child)]:mt-6">
-            Complete your profile for a better experience!
-          </p>
-          <Button
-            size={"sm"}
-            variant={"outline"}
-            onClick={() => router.push("/profile")}
-          >
-            <SettingsIcon className="mr-2 size-4" />
-            Profile Settings
-          </Button>
-        </div>
-      </CardContent>
+      {data?.firstTimeSignIn ? (
+        <CardContent>
+          <div className="flex w-full flex-col gap-4">
+            <p className="leading-7 [&:not(:first-child)]:mt-6">
+              Complete your profile for a better experience!
+            </p>
+            <Button
+              size={"sm"}
+              variant={"outline"}
+              onClick={() => router.push("/profile")}
+            >
+              <SettingsIcon className="mr-2 size-4" />
+              Profile Settings
+            </Button>
+          </div>
+        </CardContent>
+      ) : null}
     </Card>
   );
 };

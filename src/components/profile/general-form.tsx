@@ -1,5 +1,4 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
@@ -8,6 +7,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { api } from "~/trpc/react";
 import { SkeletonCard } from "../skeleton-card";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
 import {
@@ -20,21 +20,22 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const formSchema = z.object({
   username: z.string(),
   email: z.string().email(),
-  bio: z.string(),
+  description: z.string(),
 });
 
 export default function GeneralForm() {
+  const utils = api.useUtils();
   const { data, isPending } = api.user.me.useQuery();
   const updateProfile = api.user.update.useMutation({
     onMutate() {
       toast.loading("Updating profile...", { id: "update-profile" });
     },
-    onSuccess() {
+    async onSuccess() {
+      await utils.user.me.invalidate();
       toast.dismiss("update-profile");
       toast.success("Profile updated");
     },
@@ -45,6 +46,7 @@ export default function GeneralForm() {
     defaultValues: {
       email: "",
       username: "",
+      description: "",
     },
   });
 
@@ -56,6 +58,7 @@ export default function GeneralForm() {
     if (data) {
       form.setValue("email", data.email);
       form.setValue("username", data.username);
+      form.setValue("description", data.description ?? "");
     }
   }, [data]);
 
@@ -113,7 +116,7 @@ export default function GeneralForm() {
             />
             <FormField
               control={form.control}
-              name="bio"
+              name="description"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Bio / Description</FormLabel>

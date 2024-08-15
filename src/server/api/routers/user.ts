@@ -67,6 +67,7 @@ export const userRouter = createTRPCRouter({
       z.object({
         username: z.string(),
         email: z.string().email(),
+        description: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -77,6 +78,8 @@ export const userRouter = createTRPCRouter({
         data: {
           username: input.username,
           email: input.email,
+          description: input.description,
+          firstTimeSignIn: false,
         },
       });
     }),

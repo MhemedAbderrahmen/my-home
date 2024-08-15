@@ -1,5 +1,6 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import Link from "next/link";
+import MonthlyExpenses from "~/components/expenses/monthly-expenses";
 import RecentList from "~/components/shopping-lists/recent-list";
 import {
   Card,
@@ -23,18 +24,9 @@ export default function Home() {
           <div className="flex flex-col gap-4">
             <SignedIn>
               <WelcomeWithAuth />
-              <Partner />
+              <MonthlyExpenses />
               <RecentList />
-              <Card>
-                <CardHeader>
-                  <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-                    Expenses
-                  </h4>
-                  <CardDescription>
-                    Your monthly shopping list expenses
-                  </CardDescription>
-                </CardHeader>
-              </Card>
+              <Partner />
             </SignedIn>
             <SignedOut>
               <Card>
