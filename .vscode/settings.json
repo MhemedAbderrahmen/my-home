@@ -1,5 +1,5 @@
 {
-  "editor.fontFamily": "SF Mono",
+  "editor.fontFamily": "Agave Nerd Font",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": false, // required
   "editor.formatOnType": false, // required
