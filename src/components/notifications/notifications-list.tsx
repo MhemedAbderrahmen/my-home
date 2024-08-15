@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader } from "../ui/card";
 function InviteNotification() {
   return <div></div>;
 }
-
+// oh-my-posh init pwsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/amro.omp.json' | Invoke-Expression
 export function NotificationsList() {
   const { data } = api.notifications.get.useQuery();
   return (
