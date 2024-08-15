@@ -14,7 +14,10 @@ function InviteNotification({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <div>You have recieved an partner invite from {username} </div>
+      <div>
+        You have recieved an partner invite from:{" "}
+        <b className="text-primary underline">{username}</b>
+      </div>
       <small className="text-muted-foreground">
         {dayjs(createdAt).format(DEFAULT_DATE_FORMAT)}
       </small>

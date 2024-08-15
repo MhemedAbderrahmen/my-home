@@ -1,12 +1,15 @@
 "use client";
 
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
-import { BellIcon } from "lucide-react";
+import { BellIcon, BellRing } from "lucide-react";
 import Link from "next/link";
+import { api } from "~/trpc/react";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export default function TopNav() {
+  const { data } = api.notifications.get.useQuery();
+
   return (
     <div className="flex flex-col items-center justify-between p-4">
       <div>
@@ -72,7 +75,14 @@ export default function TopNav() {
                     variant={"secondary"}
                     className="text-lg"
                   >
-                    <BellIcon className="size-4" />
+                    {data?.length ? (
+                      <>
+                        <BellRing className="size-4" />
+                        <div className="h-1 w-1 rounded-full bg-red-700" />
+                      </>
+                    ) : (
+                      <BellIcon className="size-4" />
+                    )}
                   </Button>
                 </Link>
               </TooltipTrigger>
@@ -83,15 +93,6 @@ export default function TopNav() {
               </TooltipContent>
             </Tooltip>
           </SignedIn>
-          {/* <Button size={"icon"} variant={"outline"} className="text-lg">
-            👪
-          </Button>
-          <Button size={"icon"} variant={"outline"} className="text-lg">
-            💵
-          </Button>
-          <Button size={"icon"} variant={"outline"} className="text-lg">
-            👌
-          </Button> */}
           <SignedOut>
             <SignInButton>
               <Button size={"icon"} variant={"outline"} className="text-lg">
