@@ -39,11 +39,7 @@ export const Partner = () => {
           <p className="leading-7 [&:not(:first-child)]:mt-6">
             You can link with your partner and manage your home together!
           </p>
-          <Button
-            size={"sm"}
-            variant={"outline"}
-            onClick={() => router.push("/link-partner")}
-          >
+          <Button size={"sm"} onClick={() => router.push("/link-partner")}>
             <Link className="mr-2 size-4" />
             Link Partner Account
           </Button>

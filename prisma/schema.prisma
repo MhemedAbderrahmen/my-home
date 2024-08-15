@@ -90,13 +90,14 @@ model Partners {
 }
 
 model Household {
-    id          Int       @id @default(autoincrement())
-    inventoryId Int       @unique
+    id          Int        @id @default(autoincrement())
+    inventoryId Int        @unique
     userId      String
-    createdAt   DateTime  @default(now())
-    updatedAt   DateTime  @updatedAt
-    Inventory   Inventory @relation(fields: [inventoryId], references: [id])
-    User        User      @relation(fields: [userId], references: [clerkId])
+    createdAt   DateTime   @default(now())
+    updatedAt   DateTime   @updatedAt
+    Inventory   Inventory  @relation(fields: [inventoryId], references: [id])
+    User        User       @relation(fields: [userId], references: [clerkId])
+    Expenses    Expenses[]
 }
 
 model PartnerCode {
@@ -109,4 +110,14 @@ model PartnerCode {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     creator   User     @relation(fields: [userId], references: [clerkId])
+}
+
+model Expenses {
+    id          Int       @id @default(autoincrement())
+    householdId Int
+    household   Household @relation(fields: [householdId], references: [id])
+    total       Int
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
