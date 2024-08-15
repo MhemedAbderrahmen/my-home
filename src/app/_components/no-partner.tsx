@@ -31,7 +31,7 @@ export const Partner = () => {
           Partner Up!
         </h4>
         <CardDescription>
-          If you have a partner, you can invite them to join you on homely.
+          If you have a partner, you can invite them to join you on hestia.
         </CardDescription>
       </CardHeader>
       <CardContent>

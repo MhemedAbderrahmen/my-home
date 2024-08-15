@@ -6,6 +6,7 @@ import Partnership from "~/components/link-partner/partner-card";
 import { SkeletonCard } from "~/components/skeleton-card";
 import { Card, CardDescription, CardHeader } from "~/components/ui/card";
 import { api } from "~/trpc/react";
+import { PartnerSearch } from "./partner-search";
 
 export default function PartnerCheck() {
   const { data, isPending } = api.partners.get.useQuery();
@@ -32,6 +33,7 @@ export default function PartnerCheck() {
       </Card>
       <CodeGenerator />
       <ApplyCode />
+      <PartnerSearch />
     </section>
   );
 }

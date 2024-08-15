@@ -11,6 +11,11 @@ datasource db {
     directUrl = env("DIRECT_URL")
 }
 
+enum NotificationType {
+    DEFAULT
+    INVITE
+}
+
 model Post {
     id        Int      @id @default(autoincrement())
     name      String
@@ -80,6 +85,12 @@ model User {
 
     partners   Partners? @relation(fields: [partnersId], references: [id])
     partnersId Int?
+
+    sentInvites     Invitation[] @relation("to")
+    recievedInvites Invitation[] @relation("sender")
+
+    sentNotifications     Notifications[] @relation("to")
+    recievedNotifications Notifications[] @relation("sender")
 }
 
 model Partners {
@@ -120,4 +131,26 @@ model Expenses {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+model Notifications {
+    id   Int              @id @default(autoincrement())
+    type NotificationType @default(DEFAULT)
+
+    senderId String
+    sender   User   @relation("sender", fields: [senderId], references: [clerkId])
+    userId   String
+    user     User   @relation("to", fields: [userId], references: [clerkId])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Invitation {
+    id Int @id @default(autoincrement())
+
+    senderId String
+    sender   User   @relation("sender", fields: [senderId], references: [clerkId])
+    userId   String
+    user     User   @relation("to", fields: [userId], references: [clerkId])
 }

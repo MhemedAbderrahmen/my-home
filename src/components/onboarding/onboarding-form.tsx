@@ -173,7 +173,7 @@ export default function OnboardingForm() {
   return (
     <Card>
       <CardHeader>
-        <h2 className="text-xl font-semibold">Welcome to Homely</h2>
+        <h2 className="text-xl font-semibold">Welcome to Hestia</h2>
       </CardHeader>
 
       {step === 1 && <First />}
