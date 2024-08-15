@@ -9,15 +9,10 @@ import { api } from "~/trpc/react";
 import { PartnerSearch } from "./partner-search";
 
 export default function PartnerCheck() {
-  const { data, isPending } = api.partners.get.useQuery();
+  const { data, isPending } = api.partnership.get.useQuery();
   if (isPending) return <SkeletonCard />;
   if (data)
-    return (
-      <Partnership
-        primaryUserId={data.mainPartner}
-        secondaryUserId={data.secondaryPartner}
-      />
-    );
+    return <Partnership user_1Id={data.user_1Id} user_2Id={data.user_2Id} />;
   return (
     <section className="flex w-full flex-col gap-4 md:max-w-screen-sm">
       <Card>

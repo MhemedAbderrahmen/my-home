@@ -14,14 +14,13 @@ import { api } from "~/trpc/react";
 
 export const Partner = () => {
   const router = useRouter();
-  const { data, isPending } = api.user.hasPartner.useQuery();
-
+  const { data, isPending } = api.partnership.get.useQuery();
   if (isPending) return <SkeletonCard />;
   if (data)
     return (
       <Partnership
-        primaryUserId={data.partners?.mainPartner ?? ""}
-        secondaryUserId={data.partners?.secondaryPartner ?? ""}
+        user_1Id={data.user_1Id ?? ""}
+        user_2Id={data.user_2Id ?? ""}
       />
     );
   return (

@@ -26,31 +26,43 @@ export default function TopNav() {
               <p className="leading-7 [&:not(:first-child)]:mt-6">Home</p>
             </TooltipContent>
           </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link href="/shopping-lists">
-                <Button size={"icon"} variant={"secondary"} className="text-lg">
-                  🛒
-                </Button>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p className="leading-7 [&:not(:first-child)]:mt-6">Groceries</p>
-            </TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link href="/inventory">
-                <Button size={"icon"} variant={"secondary"} className="text-lg">
-                  📦
-                </Button>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p className="leading-7 [&:not(:first-child)]:mt-6">Inventory</p>
-            </TooltipContent>
-          </Tooltip>
           <SignedIn>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link href="/shopping-lists">
+                  <Button
+                    size={"icon"}
+                    variant={"secondary"}
+                    className="text-lg"
+                  >
+                    🛒
+                  </Button>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="leading-7 [&:not(:first-child)]:mt-6">
+                  Groceries
+                </p>
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link href="/inventory">
+                  <Button
+                    size={"icon"}
+                    variant={"secondary"}
+                    className="text-lg"
+                  >
+                    📦
+                  </Button>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="leading-7 [&:not(:first-child)]:mt-6">
+                  Inventory
+                </p>
+              </TooltipContent>
+            </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link href="/profile">

@@ -24,17 +24,22 @@ export const userRouter = createTRPCRouter({
     }),
 
   hasPartner: protectedProcedure.query(async ({ ctx }) => {
-    return await ctx.db.user.findFirst({
+    const partnership = await ctx.db.user.findFirst({
       where: {
         clerkId: ctx.user.userId,
-        partnersId: {
-          not: null,
+        myPartnerships: {
+          isNot: null,
         },
       },
       include: {
-        partners: true,
+        myPartnerships: true,
       },
     });
+    console.log(
+      "🚀 ~ hasPartner:protectedProcedure.query ~ partnership:",
+      partnership,
+    );
+    return partnership;
   }),
 
   me: protectedProcedure.query(async ({ ctx }) => {
@@ -44,7 +49,7 @@ export const userRouter = createTRPCRouter({
       },
       include: {
         household: true,
-        partners: true,
+        myPartnerships: true,
       },
     });
   }),

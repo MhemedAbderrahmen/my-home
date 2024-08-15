@@ -83,21 +83,22 @@ model User {
     household   Household[]
     PartnerCode PartnerCode[]
 
-    partners   Partners? @relation(fields: [partnersId], references: [id])
-    partnersId Int?
-
     sentInvites     Invitation[] @relation("to")
     recievedInvites Invitation[] @relation("sender")
 
     sentNotifications     Notifications[] @relation("to")
     recievedNotifications Notifications[] @relation("sender")
+
+    myPartnerships Partnership? @relation("user_1")
+    partnership    Partnership? @relation("user_2")
 }
 
-model Partners {
-    id               Int    @id @default(autoincrement())
-    mainPartner      String
-    secondaryPartner String
-    User             User[]
+model Partnership {
+    id       Int    @id @default(autoincrement())
+    user_1Id String @unique
+    user_2Id String @unique
+    user_1   User   @relation("user_1", fields: [user_1Id], references: [clerkId])
+    user_2   User   @relation("user_2", fields: [user_2Id], references: [clerkId])
 }
 
 model Household {

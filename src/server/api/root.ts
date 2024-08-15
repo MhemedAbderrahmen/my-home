@@ -6,7 +6,7 @@ import { inventoryRouter } from "./routers/inventory";
 import { invitationsRouter } from "./routers/invitation";
 import { notificationsRouter } from "./routers/notifications";
 import { partnerCodeRouter } from "./routers/partner-code";
-import { partnersRouter } from "./routers/partners";
+import { partnershipRouter } from "./routers/partnership";
 import { shoppingListRouter } from "./routers/shopping-list";
 import { userRouter } from "./routers/user";
 
@@ -18,7 +18,7 @@ import { userRouter } from "./routers/user";
 export const appRouter = createTRPCRouter({
   user: userRouter,
   expenses: expensesRouter,
-  partners: partnersRouter,
+  partnership: partnershipRouter,
   groceries: groceriesRouter,
   inventory: inventoryRouter,
   household: householdRouter, // Add the household router to the appRouter

@@ -34,7 +34,6 @@ function UserInviteCard({
         description: string | null;
         createdAt: Date;
         updatedAt: Date;
-        partnersId: number | null;
       }
     | undefined;
 }) {
@@ -60,12 +59,12 @@ function UserInviteCard({
 
   if (!data) <div>Error</div>;
   return (
-    <div>
-      <div className="flex flex-row items-center justify-between gap-4">
-        <Avatar>
-          <AvatarImage src={data?.imageUrl} alt="@shadcn" />
-          <AvatarFallback>a</AvatarFallback>
-        </Avatar>
+    <div className="flex w-full items-center gap-4">
+      <Avatar>
+        <AvatarImage src={data?.imageUrl} alt="@shadcn" />
+        <AvatarFallback>a</AvatarFallback>
+      </Avatar>
+      <div className="flex w-full flex-row items-center justify-between gap-4">
         <div className="flex flex-col gap-2">
           <small className="text-sm font-medium leading-none">
             {data?.username}

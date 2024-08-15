@@ -33,4 +33,18 @@ export const notificationsRouter = createTRPCRouter({
       },
     });
   }),
+
+  delete: protectedProcedure
+    .input(
+      z.object({
+        id: z.coerce.number(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.notifications.delete({
+        where: {
+          id: input.id,
+        },
+      });
+    }),
 });

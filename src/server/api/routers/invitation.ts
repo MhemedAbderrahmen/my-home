@@ -23,4 +23,16 @@ export const invitationsRouter = createTRPCRouter({
         },
       });
     }),
+
+  delete: protectedProcedure.mutation(async ({ ctx }) => {
+    const invitation = await ctx.db.invitation.findFirst({
+      where: {
+        userId: ctx.user.userId,
+      },
+    });
+    if (!invitation) throw new TRPCError({ code: "NOT_FOUND" });
+    return await ctx.db.invitation.delete({
+      where: { id: invitation.id },
+    });
+  }),
 });
