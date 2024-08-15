@@ -35,7 +35,7 @@ export default function Home() {
                     Welcome 👋
                   </h4>
                   <CardDescription>
-                    Welcome to homely, an app to help you manage your home.
+                    Welcome to hestia, an app to help you manage your home.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>

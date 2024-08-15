@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
@@ -82,5 +83,22 @@ export const userRouter = createTRPCRouter({
           firstTimeSignIn: false,
         },
       });
+    }),
+
+  findWithUsername: protectedProcedure
+    .input(
+      z.object({
+        username: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const user = await ctx.db.user.findFirst({
+        where: {
+          username: input.username,
+        },
+      });
+
+      if (!user) throw new TRPCError({ code: "NOT_FOUND" });
+      return user;
     }),
 });

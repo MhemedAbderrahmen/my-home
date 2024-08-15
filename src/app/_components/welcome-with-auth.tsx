@@ -22,7 +22,7 @@ export const WelcomeWithAuth = () => {
           Welcome, {data?.username}! 👋
         </h4>
         <CardDescription>
-          Welcome to homely, an app to help you manage your home.
+          Welcome to hestia, an app to help you manage your home.
         </CardDescription>
       </CardHeader>
       {data?.firstTimeSignIn ? (
@@ -31,11 +31,7 @@ export const WelcomeWithAuth = () => {
             <p className="leading-7 [&:not(:first-child)]:mt-6">
               Complete your profile for a better experience!
             </p>
-            <Button
-              size={"sm"}
-              variant={"outline"}
-              onClick={() => router.push("/profile")}
-            >
+            <Button size={"sm"} onClick={() => router.push("/profile")}>
               <SettingsIcon className="mr-2 size-4" />
               Profile Settings
             </Button>

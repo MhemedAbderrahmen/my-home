@@ -1,6 +1,5 @@
 {
-  "editor.fontFamily": "'Cascadia Code', 'Courier New', monospace",
-  "editor.fontLigatures": true,
+  "editor.fontFamily": "SF Mono",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": false, // required
   "editor.formatOnType": false, // required

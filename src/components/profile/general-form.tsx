@@ -127,7 +127,7 @@ export default function GeneralForm() {
                     />
                   </FormControl>
                   <FormDescription>
-                    This describe you and your interests
+                    Your primary bio / description
                   </FormDescription>
                 </FormItem>
               )}

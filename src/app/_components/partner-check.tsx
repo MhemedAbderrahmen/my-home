@@ -6,6 +6,7 @@ import Partnership from "~/components/link-partner/partner-card";
 import { SkeletonCard } from "~/components/skeleton-card";
 import { Card, CardDescription, CardHeader } from "~/components/ui/card";
 import { api } from "~/trpc/react";
+import { PartnerSearch } from "./partner-search";
 
 export default function PartnerCheck() {
   const { data, isPending } = api.partners.get.useQuery();
@@ -25,12 +26,14 @@ export default function PartnerCheck() {
             WIP: This section is still work in progress
           </h4>
           <CardDescription>
-            You can generate a link or accept a partner invite by filling the "I have a partner" Section
+            You can generate a link or accept a partner invite by filling the
+            &quot; I&apos;have a partner&quot; Section
           </CardDescription>
         </CardHeader>
       </Card>
       <CodeGenerator />
       <ApplyCode />
+      <PartnerSearch />
     </section>
   );
-} 
+}

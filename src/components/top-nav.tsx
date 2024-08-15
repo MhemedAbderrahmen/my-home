@@ -1,8 +1,8 @@
 "use client";
 
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { BellIcon } from "lucide-react";
 import Link from "next/link";
-import { ThemeToggle } from "./theme-toggle";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
@@ -14,7 +14,7 @@ export default function TopNav() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link href="/">
-                <Button size={"icon"} variant={"outline"} className="text-lg">
+                <Button size={"icon"} variant={"secondary"} className="text-lg">
                   🏠
                 </Button>
               </Link>
@@ -26,7 +26,7 @@ export default function TopNav() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link href="/shopping-lists">
-                <Button size={"icon"} variant={"outline"} className="text-lg">
+                <Button size={"icon"} variant={"secondary"} className="text-lg">
                   🛒
                 </Button>
               </Link>
@@ -38,7 +38,7 @@ export default function TopNav() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link href="/inventory">
-                <Button size={"icon"} variant={"outline"} className="text-lg">
+                <Button size={"icon"} variant={"secondary"} className="text-lg">
                   📦
                 </Button>
               </Link>
@@ -51,13 +51,35 @@ export default function TopNav() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link href="/profile">
-                  <Button size={"icon"} variant={"outline"} className="text-lg">
+                  <Button
+                    size={"icon"}
+                    variant={"secondary"}
+                    className="text-lg"
+                  >
                     🧑
                   </Button>
                 </Link>
               </TooltipTrigger>
               <TooltipContent>
                 <p className="leading-7 [&:not(:first-child)]:mt-6">Profile</p>
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link href="/notifications">
+                  <Button
+                    size={"icon"}
+                    variant={"secondary"}
+                    className="text-lg"
+                  >
+                    <BellIcon className="size-4" />
+                  </Button>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="leading-7 [&:not(:first-child)]:mt-6">
+                  Notifications
+                </p>
               </TooltipContent>
             </Tooltip>
           </SignedIn>
@@ -70,7 +92,6 @@ export default function TopNav() {
           <Button size={"icon"} variant={"outline"} className="text-lg">
             👌
           </Button> */}
-          <ThemeToggle />
           <SignedOut>
             <SignInButton>
               <Button size={"icon"} variant={"outline"} className="text-lg">

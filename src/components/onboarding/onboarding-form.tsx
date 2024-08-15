@@ -121,13 +121,23 @@ export default function OnboardingForm() {
   const [step, setStep] = useState<number>(1);
   const [username, setUsername] = useState<string>("");
 
-  const initiHousehold = api.household.create.useMutation({
+  const initExpenses = api.expenses.create.useMutation({
     onMutate() {
-      toast.loading("Creating household...", { id: "create-household" });
+      toast.loading("Initialising expenses..", { id: "init-expenses" });
     },
     onSuccess() {
-      toast.dismiss("create-household");
-      toast.success("Household created successfully");
+      toast.dismiss("init-expenses");
+      toast.success("Expenses initialised");
+    },
+  });
+
+  const initiHousehold = api.household.create.useMutation({
+    onMutate() {
+      toast.loading("Initialising household...", { id: "init-household" });
+    },
+    onSuccess() {
+      toast.dismiss("init-household");
+      toast.success("Household initialised");
     },
   });
 
@@ -150,7 +160,10 @@ export default function OnboardingForm() {
         username,
         imageUrl: user?.imageUrl ?? "",
       });
-      await initiHousehold.mutateAsync();
+
+      const household = await initiHousehold.mutateAsync();
+      await initExpenses.mutateAsync({ householdId: household.id });
+
       await completeOnboarding();
       await user?.reload();
       router.push("/");
@@ -160,7 +173,7 @@ export default function OnboardingForm() {
   return (
     <Card>
       <CardHeader>
-        <h2 className="text-xl font-semibold">Welcome to Homely</h2>
+        <h2 className="text-xl font-semibold">Welcome to Hestia</h2>
       </CardHeader>
 
       {step === 1 && <First />}

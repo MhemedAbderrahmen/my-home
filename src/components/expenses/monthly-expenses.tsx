@@ -5,7 +5,10 @@ import { SkeletonCard } from "../skeleton-card";
 import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
 
 export default function MonthlyExpenses() {
-  const { data, isPending } = api.expenses.getMonthly.useQuery();
+  const { data: connectedUser } = api.user.me.useQuery();
+  const { data, isPending } = api.expenses.getMonthly.useQuery({
+    householdId: connectedUser?.household[0]?.id ?? 0,
+  });
 
   if (isPending) return <SkeletonCard />;
   return (
@@ -17,12 +20,11 @@ export default function MonthlyExpenses() {
           </h4>
           <DollarSignIcon />
         </div>
-
         <CardDescription>Your monthly shopping list expenses</CardDescription>
       </CardHeader>
       <CardContent>
         <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-          DT {data}
+          {data?.total} DT
         </h3>
       </CardContent>
     </Card>

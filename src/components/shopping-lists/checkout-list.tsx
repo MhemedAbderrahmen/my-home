@@ -30,7 +30,9 @@ const formSchema = z.object({
 
 export default function CheckoutList({ id }: { id: number }) {
   const utils = api.useUtils();
+  const { data } = api.user.me.useQuery();
   const updateInventory = api.inventory.add.useMutation();
+  const updateExpenses = api.expenses.update.useMutation();
   const checkout = api.shoppingList.checkout.useMutation({
     onMutate() {
       toast.loading("Creating shopping list", { id: "create-shopping-list" });
@@ -41,6 +43,7 @@ export default function CheckoutList({ id }: { id: number }) {
       });
       await utils.shoppingList.getAll.invalidate();
       await utils.shoppingList.getPaidLists.invalidate();
+
       toast.dismiss("create-shopping-list");
       toast.success("Shopping list created", { duration: 3000 });
     },
@@ -54,7 +57,11 @@ export default function CheckoutList({ id }: { id: number }) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await checkout.mutateAsync({ ...values, id });
+    const checkedoutList = await checkout.mutateAsync({ ...values, id });
+    await updateExpenses.mutateAsync({
+      householdId: data?.household[0]?.id ?? 0,
+      expense: checkedoutList.payment,
+    });
   }
 
   return (

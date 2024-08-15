@@ -14,7 +14,7 @@ export const groceriesRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      return ctx.db.groceries.create({
+      return await ctx.db.groceries.create({
         data: {
           itemName: input.itemName,
           unit: input.unit,

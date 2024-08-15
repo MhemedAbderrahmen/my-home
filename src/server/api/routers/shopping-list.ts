@@ -53,7 +53,7 @@ export const shoppingListRouter = createTRPCRouter({
     return groceries;
   }),
 
-  checkout: publicProcedure
+  checkout: protectedProcedure
     .input(z.object({ id: z.coerce.number(), payment: z.coerce.number() }))
     .mutation(async ({ ctx, input }) => {
       const { id, payment } = input;
@@ -61,9 +61,7 @@ export const shoppingListRouter = createTRPCRouter({
         where: { id },
       });
 
-      if (!shoppingList) {
-        throw new Error("Shopping list not found");
-      }
+      if (!shoppingList) throw new Error("Shopping list not found");
 
       return ctx.db.shoppingList.update({
         where: { id },
